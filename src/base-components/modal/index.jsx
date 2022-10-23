@@ -1,4 +1,4 @@
-import { createElement, createRef, useEffect } from 'react';
+import React, { createElement, createRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import dom from '@left4code/tw-starter/dist/js/dom';
 import '@left4code/tw-starter/dist/js/modal';

@@ -1,4 +1,4 @@
-import { createElement, useRef, createRef, useEffect } from 'react';
+import React, { createElement, useRef, createRef, useEffect } from 'react';
 import '@left4code/tw-starter/dist/js/modal';
 import { init, reInit } from './index';
 import PropTypes from 'prop-types';

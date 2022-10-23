@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { colorScheme as colorSchemeStore } from '@/stores/color-scheme';
 import { useMemo } from 'react';
 import { helper as $h } from '@/utils/helper';
+import React from 'react';
 
 function Main(props) {
 	const colorScheme = useRecoilValue(colorSchemeStore);

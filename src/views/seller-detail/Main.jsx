@@ -11,7 +11,7 @@ import {
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
 import classnames from 'classnames';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Main() {
 	const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -172,7 +172,7 @@ function Main() {
 												className='rounded-md'
 												src={faker.images[0]}
 											/>
-											<template v-if='faker.trueFalse[0]'>
+											<template>
 												<span className='absolute top-0 bg-pending/80 text-white text-xs m-5 px-2 py-1 rounded z-10'>
 													Featured
 												</span>

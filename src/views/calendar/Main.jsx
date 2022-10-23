@@ -9,6 +9,7 @@ import {
 } from '@/base-components';
 import Calendar from '@/components/calendar/Main';
 import dom from '@left4code/tw-starter/dist/js/dom';
+import React from 'react';
 
 function Main() {
 	const dragableOptions = {

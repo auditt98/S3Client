@@ -1,3 +1,4 @@
+import React from 'react';
 import { Lucide, PreviewComponent, Preview, Source, Highlight } from '@/base-components';
 import { useForm } from 'react-hook-form';
 import Toastify from 'toastify-js';

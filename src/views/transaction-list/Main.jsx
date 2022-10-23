@@ -11,7 +11,7 @@ import {
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
 import classnames from 'classnames';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Main() {
 	const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -101,10 +101,7 @@ function Main() {
 											{faker.users[0].name}
 										</a>
 										{faker.trueFalse[0] ? (
-											<div
-												v-if='faker.trueFalse[0]'
-												className='text-slate-500 text-xs whitespace-nowrap mt-0.5'
-											>
+											<div className='text-slate-500 text-xs whitespace-nowrap mt-0.5'>
 												Ohio, Ohio
 											</div>
 										) : (

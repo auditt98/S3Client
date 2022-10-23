@@ -5,6 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import dom from '@left4code/tw-starter/dist/js/dom';
 import { FullCalendar } from '@/base-components';
+import React from 'react';
 
 function Main() {
 	const options = {

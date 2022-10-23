@@ -1,3 +1,4 @@
+import React from 'react';
 import { Lucide, Dropdown, DropdownToggle, DropdownMenu, DropdownContent } from '@/base-components';
 
 function Main() {

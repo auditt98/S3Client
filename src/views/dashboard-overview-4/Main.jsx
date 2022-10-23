@@ -4,7 +4,7 @@ import * as $_ from 'lodash';
 import classnames from 'classnames';
 import ReportDonutChart from '@/components/report-donut-chart/Main';
 import ReportMap from '@/components/report-map/Main';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 function Main() {
 	const importantNotesRef = useRef();

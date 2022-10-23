@@ -11,6 +11,7 @@ import logoUrl from '@/assets/images/logo.svg';
 import classnames from 'classnames';
 import dom from '@left4code/tw-starter/dist/js/dom';
 import SimpleBar from 'simplebar';
+import React from 'react';
 
 function Main(props) {
 	const navigate = useNavigate();

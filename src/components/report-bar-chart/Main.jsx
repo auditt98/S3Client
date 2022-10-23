@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { colorScheme as colorSchemeStore } from '@/stores/color-scheme';
 import { darkMode as darkModeStore } from '@/stores/dark-mode';
 import { createRef, useMemo, useEffect } from 'react';
+import React from 'react';
 
 function Main(props) {
 	const reportBarChartRef = createRef();

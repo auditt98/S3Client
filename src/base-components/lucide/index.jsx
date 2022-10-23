@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import * as lucideIcons from 'lucide-react';
 import PropTypes from 'prop-types';
 

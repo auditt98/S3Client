@@ -1,5 +1,5 @@
 import { Dropzone, PreviewComponent, Preview, Source, Highlight } from '@/base-components';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 function Main() {
 	const dropzoneSingleRef = useRef();

@@ -1,4 +1,4 @@
-import { createElement, createRef, useEffect, useRef } from 'react';
+import React, { createElement, createRef, useEffect, useRef } from 'react';
 import DocumentEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { init, updateData } from './index';
 import PropTypes from 'prop-types';

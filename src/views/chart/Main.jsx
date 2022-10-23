@@ -5,6 +5,7 @@ import HorizontalBarChart from '@/components/horizontal-bar-chart/Main';
 import LineChart from '@/components/line-chart/Main';
 import DonutChart from '@/components/donut-chart/Main';
 import PieChart from '@/components/pie-chart/Main';
+import React from 'react';
 
 function Main() {
 	return (

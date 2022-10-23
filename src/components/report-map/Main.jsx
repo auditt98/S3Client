@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useRecoilValue } from 'recoil';
 import { darkMode as darkModeStore } from '@/stores/dark-mode';
 import location from '@/assets/json/location.json';
+import React from 'react';
 
 function Main(props) {
 	const imageAssets = import.meta.globEager(`/src/assets/images/*.{jpg,jpeg,png,svg}`);

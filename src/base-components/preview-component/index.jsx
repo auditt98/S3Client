@@ -1,4 +1,4 @@
-import { createContext, createElement, createRef, useEffect, useState, useRef, useContext } from 'react';
+import React, { createContext, createElement, createRef, useEffect, useState, useRef, useContext } from 'react';
 import { Lucide } from '@/base-components';
 import jsBeautify from 'js-beautify';
 import hljs from 'highlight.js';

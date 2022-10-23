@@ -3,6 +3,7 @@ import { colorSchemeValue, colorScheme as colorSchemeStore } from '@/stores/colo
 import { darkMode as darkModeStore } from '@/stores/dark-mode';
 import dom from '@left4code/tw-starter/dist/js/dom';
 import classnames from 'classnames';
+import React from 'react';
 
 function Main(props) {
 	const darkMode = useRecoilValue(darkModeStore);

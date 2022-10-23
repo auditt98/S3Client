@@ -1,4 +1,4 @@
-import { createElement, createRef, useEffect, useRef } from 'react';
+import React, { createElement, createRef, useEffect, useRef } from 'react';
 import BalloonBlockEditor from '@ckeditor/ckeditor5-build-balloon-block';
 import { init, updateData } from './index';
 import PropTypes from 'prop-types';

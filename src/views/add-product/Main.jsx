@@ -1,7 +1,7 @@
 import { Lucide, Tippy, TomSelect, Alert, ClassicEditor } from '@/base-components';
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Main() {
 	const [subcategory, setSubcategory] = useState([]);

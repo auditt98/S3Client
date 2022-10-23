@@ -1,3 +1,4 @@
+import React from 'react';
 import { PreviewComponent, Preview, Source, Highlight } from '@/base-components';
 
 function Main() {
@@ -15,7 +16,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Heading</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-1'>
+										<label className='form-check-label ml-0' htmlFor='show-example-1'>
 											Show example code
 										</label>
 										<input
@@ -112,7 +113,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Text Settings</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-2'>
+										<label className='form-check-label ml-0' htmlFor='show-example-2'>
 											Show example code
 										</label>
 										<input
@@ -169,7 +170,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Common Elements</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-3'>
+										<label className='form-check-label ml-0' htmlFor='show-example-3'>
 											Show example code
 										</label>
 										<input
@@ -246,7 +247,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Badges</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-4'>
+										<label className='form-check-label ml-0' htmlFor='show-example-4'>
 											Show example code
 										</label>
 										<input
@@ -498,7 +499,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Separator</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-5'>
+										<label className='form-check-label ml-0' htmlFor='show-example-5'>
 											Show example code
 										</label>
 										<input
@@ -537,7 +538,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Devider</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-6'>
+										<label className='form-check-label ml-0' htmlFor='show-example-6'>
 											Show example code
 										</label>
 										<input
@@ -582,7 +583,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Links</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-7'>
+										<label className='form-check-label ml-0' htmlFor='show-example-7'>
 											Show example code
 										</label>
 										<input

@@ -1,3 +1,4 @@
+import React from 'react';
 import { LoadingIcon } from '@/base-components';
 
 function Main() {

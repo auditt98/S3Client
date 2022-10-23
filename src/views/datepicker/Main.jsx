@@ -15,7 +15,7 @@ import {
 	Source,
 	Highlight,
 } from '@/base-components';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Main() {
 	const [date, setDate] = useState('');

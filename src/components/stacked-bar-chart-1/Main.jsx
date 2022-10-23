@@ -2,6 +2,7 @@ import { Chart } from '@/base-components';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { helper as $h } from '@/utils/helper';
+import React from 'react';
 
 function Main(props) {
 	const data = useMemo(() => {

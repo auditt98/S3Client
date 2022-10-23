@@ -14,7 +14,7 @@ import {
 } from '@/base-components';
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 function Main() {
 	const newProductsRef = useRef();

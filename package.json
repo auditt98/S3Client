@@ -1,11 +1,6 @@
 {
 	"name": "tinker-react",
 	"version": "0.0.0",
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
-    }
-  },
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
@@ -13,6 +8,7 @@
 		"deploy": "node auto-deploy.js",
 		"pretty": "prettier --write ./src/**/*.{js,jsx,ts,tsx,css,scss,less,html,json,md}",
 		"prepare": "husky install",
+		"lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
 		"commit": "cz"
 	},
 	"dependencies": {
@@ -81,17 +77,22 @@
 		"eslint-plugin-react": "^7.31.10",
 		"eslint-plugin-sonarjs": "^0.16.0",
 		"husky": "^8.0.1",
+		"lint-staged": "^13.0.3",
 		"lodash": "^4.17.21",
 		"postcss": "^8.4.5",
 		"postcss-advanced-variables": "^3.0.1",
 		"postcss-import": "^14.0.2",
 		"prettier": "^2.7.1",
-		"tailwindcss": "^3.0.24",
+		"tailwindcss": "^3.2.1",
 		"vite": "^2.7.2"
 	},
 	"config": {
 		"commitizen": {
 			"path": "./node_modules/cz-conventional-changelog"
 		}
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx}": "eslint --cache --fix",
+		"*.{js,css,md,html,json}": "prettier --cache --write"
 	}
 }

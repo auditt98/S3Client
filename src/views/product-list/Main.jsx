@@ -12,7 +12,7 @@ import {
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
 import classnames from 'classnames';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Main() {
 	const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);

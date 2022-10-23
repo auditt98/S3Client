@@ -8,6 +8,7 @@ import {
 	Source,
 	Highlight,
 } from '@/base-components';
+import React from 'react';
 
 function Main() {
 	return (
@@ -24,7 +25,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Basic Accordion</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-1'>
+										<label className='form-check-label ml-0' htmlFor='show-example-1'>
 											Show example code
 										</label>
 										<input
@@ -166,7 +167,7 @@ function Main() {
 								<div className='flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400'>
 									<h2 className='font-medium text-base mr-auto'>Boxed Accordion</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
-										<label className='form-check-label ml-0' for='show-example-2'>
+										<label className='form-check-label ml-0' htmlFor='show-example-2'>
 											Show example code
 										</label>
 										<input

@@ -18,7 +18,7 @@ import {
 import ReportLineChart from '@/components/report-line-chart/Main';
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 function Main() {
 	const announcementRef = useRef();

@@ -1,4 +1,4 @@
-import { createElement, createRef, useEffect, useRef } from 'react';
+import React, { createElement, createRef, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'chart.js/auto';
 

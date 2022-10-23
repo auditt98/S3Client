@@ -13,7 +13,7 @@ import {
 } from '@/base-components';
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 
 function Main() {

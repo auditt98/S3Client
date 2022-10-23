@@ -1,6 +1,7 @@
 import { Lucide, Dropdown, DropdownToggle, DropdownMenu, DropdownContent, DropdownItem } from '@/base-components';
 import { faker as $f } from '@/utils';
 import classnames from 'classnames';
+import React from 'react';
 
 function Main() {
 	return (

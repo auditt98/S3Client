@@ -20,7 +20,7 @@ import classnames from 'classnames';
 import ReportDonutChart from '@/components/report-donut-chart/Main';
 import ReportBarChart from '@/components/report-bar-chart/Main';
 import ReportMap from '@/components/report-map/Main';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import womanIllustrationUrl from '@/assets/images/woman-illustration.svg';
 import phoneIllustrationUrl from '@/assets/images/phone-illustration.svg';
 

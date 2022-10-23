@@ -1,4 +1,4 @@
-import { createElement, createRef, useEffect, useRef } from 'react';
+import React, { createElement, createRef, useEffect, useRef } from 'react';
 import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { init, updateData } from './index';
 import PropTypes from 'prop-types';

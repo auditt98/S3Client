@@ -1,3 +1,4 @@
+import React from 'react';
 import { Lucide, Dropdown, DropdownToggle, DropdownMenu, DropdownContent, DropdownItem } from '@/base-components';
 import { faker as $f } from '@/utils';
 

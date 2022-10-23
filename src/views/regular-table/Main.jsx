@@ -1,3 +1,4 @@
+import React from 'react';
 import { PreviewComponent, Preview, Source, Highlight } from '@/base-components';
 
 function Main() {

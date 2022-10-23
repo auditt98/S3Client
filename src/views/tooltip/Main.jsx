@@ -1,3 +1,4 @@
+import React from 'react';
 import { PreviewComponent, Tippy, TippyContent, Preview, Source, Highlight } from '@/base-components';
 import { faker as $f } from '@/utils';
 import SimpleLineChart1 from '@/components/simple-line-chart-1/Main';

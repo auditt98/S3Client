@@ -2,7 +2,7 @@ import DarkModeSwitcher from '@/components/dark-mode-switcher/Main';
 import dom from '@left4code/tw-starter/dist/js/dom';
 import logoUrl from '@/assets/images/logo.svg';
 import illustrationUrl from '@/assets/images/illustration.svg';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 function Main() {
 	useEffect(() => {

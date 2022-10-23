@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ClassicEditor, PreviewComponent, Preview, Source, Highlight } from '@/base-components';
 
 function Main() {

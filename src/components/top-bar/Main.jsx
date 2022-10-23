@@ -12,6 +12,7 @@ import {
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
 import classnames from 'classnames';
+import React from 'react';
 
 function Main(props) {
 	const [searchDropdown, setSearchDropdown] = useState(false);

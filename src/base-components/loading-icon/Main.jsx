@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import { darkMode as darkModeStore } from '@/stores/dark-mode';
 import PropTypes from 'prop-types';

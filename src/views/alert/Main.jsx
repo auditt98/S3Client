@@ -1,4 +1,5 @@
 import { Lucide, Alert, PreviewComponent, Preview, Source, Highlight } from '@/base-components';
+import React from 'react';
 
 function Main() {
 	return (

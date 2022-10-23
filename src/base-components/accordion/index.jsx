@@ -2,6 +2,7 @@ import { createElement, createRef, useEffect } from 'react';
 import dom from '@left4code/tw-starter/dist/js/dom';
 import '@left4code/tw-starter/dist/js/accordion';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const init = (el, props) => {
 	const accordionGroupId = '_' + Math.random().toString(36).substr(2, 9);

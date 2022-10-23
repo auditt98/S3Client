@@ -1,4 +1,4 @@
-import { createRef, useRef, useEffect } from 'react';
+import React, { createRef, useRef, useEffect } from 'react';
 import { init, reInit } from './index';
 import PropTypes from 'prop-types';
 

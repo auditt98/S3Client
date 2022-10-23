@@ -1,4 +1,5 @@
 import { Lucide } from '@/base-components';
+import React from 'react';
 
 function Main() {
 	return (

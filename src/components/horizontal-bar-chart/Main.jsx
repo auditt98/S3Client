@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { useMemo } from 'react';
 import { colorScheme as colorSchemeStore } from '@/stores/color-scheme';
 import { darkMode as darkModeStore } from '@/stores/dark-mode';
+import React from 'react';
 
 function Main(props) {
 	const darkMode = useRecoilValue(darkModeStore);

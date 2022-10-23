@@ -1,5 +1,5 @@
 import { ClassicEditor, TomSelect } from '@/base-components';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Main() {
 	const [categories, setCategories] = useState([1, 3]);

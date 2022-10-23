@@ -1,3 +1,4 @@
+import React from 'react';
 import { TinySlider, PreviewComponent, Preview, Source, Highlight } from '@/base-components';
 import { faker as $f } from '@/utils';
 

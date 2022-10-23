@@ -1,5 +1,5 @@
 import { TomSelect, PreviewComponent, Preview, Source, Highlight } from '@/base-components';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Main() {
 	const [select, setSelect] = useState('1');

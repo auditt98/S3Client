@@ -1,3 +1,4 @@
+import React from 'react';
 import { Lucide } from '@/base-components';
 
 function Main() {

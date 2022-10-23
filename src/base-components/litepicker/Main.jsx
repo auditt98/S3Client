@@ -1,7 +1,6 @@
-import { createElement, createRef, useEffect } from 'react';
+import React, { useRef, createElement, createRef, useEffect } from 'react';
 import { setValue, init, reInit } from './index';
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
 
 function Litepicker(props) {
 	const initialRender = useRef(true);

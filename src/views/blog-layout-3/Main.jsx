@@ -1,5 +1,6 @@
 import { Lucide, Tippy } from '@/base-components';
 import { faker as $f } from '@/utils';
+import React from 'react';
 
 function Main() {
 	return (

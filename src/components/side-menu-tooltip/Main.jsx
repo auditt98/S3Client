@@ -1,6 +1,7 @@
 import { useRef, createElement, useEffect } from 'react';
 import { Tippy } from '@/base-components';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const toggleTooltip = (el) => {
 	if (dom(window).width() <= 1260) {

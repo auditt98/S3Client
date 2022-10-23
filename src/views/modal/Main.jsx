@@ -16,7 +16,7 @@ import {
 	Highlight,
 } from '@/base-components';
 import { faker as $f } from '@/utils';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Main() {
 	const [basicModalPreview, setBasicModalPreview] = useState(false);

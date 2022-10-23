@@ -1,3 +1,4 @@
+import React from 'react';
 import { Lucide, TabGroup, TabList, Tab, TabPanels, TabPanel } from '@/base-components';
 
 function Main() {

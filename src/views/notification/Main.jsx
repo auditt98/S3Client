@@ -1,6 +1,6 @@
 import { Lucide, Notification, PreviewComponent, Preview, Source, Highlight } from '@/base-components';
 import { faker as $f } from '@/utils';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 function Main() {
 	// Basic non sticky notification

@@ -1,4 +1,4 @@
-import { createRef, useEffect } from 'react';
+import React, { createRef, useEffect } from 'react';
 import { initializeMap } from './index';
 import PropTypes from 'prop-types';
 

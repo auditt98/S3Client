@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import SideMenu from '../layouts/side-menu/Main';
 import SimpleMenu from '../layouts/simple-menu/Main';
