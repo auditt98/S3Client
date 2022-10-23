@@ -1,0 +1,16 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+while read local_ref local_sha remote_ref remote_sha
+do
+    # Do something with these variables
+    echo "local_ref: $local_ref"
+    echo "local_sha: $local_sha"
+    echo "remote_ref: $remote_ref"
+    echo "remote_sha: $remote_sha"
+    echo "Executing pre-push hook to build + deploy"
+    if [ "$remote_ref" = "refs/heads/develop" ];
+    then
+        npm run build && npm run deploy
+    fi
+done
