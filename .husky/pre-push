@@ -3,6 +3,7 @@
 
 while read local_ref local_sha remote_ref remote_sha
 do
+    git pull
     # Do something with these variables
     echo "local_ref: $local_ref"
     echo "local_sha: $local_sha"
