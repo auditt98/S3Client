@@ -9,7 +9,8 @@
 		"pretty": "prettier --write ./src/**/*.{js,jsx,ts,tsx,css,scss,less,html,json,md}",
 		"prepare": "husky install",
 		"lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
-		"commit": "cz"
+		"commit": "cz",
+		"start": "vite"
 	},
 	"dependencies": {
 		"@ckeditor/ckeditor5-build-balloon": "^29.1.0",
@@ -44,8 +45,10 @@
 		"lucide-react": "^0.37.0",
 		"prop-types": "^15.8.1",
 		"react": "^18.0.0",
+		"react-date-range": "^1.4.0",
 		"react-dom": "^18.0.0",
 		"react-hook-form": "^7.29.0",
+		"react-i18next": "^12.0.0",
 		"react-router-dom": "^6.3.0",
 		"react-transition-group": "^4.4.2",
 		"recoil": "^0.7.0",

@@ -1,134 +1,116 @@
 import { Lucide, Dropdown, DropdownToggle, DropdownMenu, DropdownContent, DropdownItem } from '@/base-components';
 import { faker as $f } from '@/utils';
 import classnames from 'classnames';
-import React from 'react';
+import React, { useState } from 'react';
+import Selector from '../../components/selector/Selector';
+import { useTranslation } from 'react-i18next';
 
-function Main() {
+export default function Dashboard() {
+	const { t } = useTranslation();
+	const statuses = [
+		{
+			id: 1,
+			label: t('status.cancel'),
+			value: 'status.cancel',
+			selected: false,
+		},
+		{
+			id: 2,
+			label: t('status.confirm'),
+			value: 'status.confirm',
+			selected: false,
+		},
+		{
+			id: 3,
+			label: t('status.pending'),
+			value: 'status.pending',
+			selected: false,
+		},
+		{
+			id: 4,
+			label: t('status.processing'),
+			value: 'status.processing',
+			selected: false,
+		},
+		{
+			id: 5,
+			label: t('status.reject'),
+			value: 'status.reject',
+			selected: false,
+		},
+		{
+			id: 6,
+			label: t('status.await-payment-request'),
+			value: 'status.await-payment-request',
+			selected: false,
+		},
+		{
+			id: 7,
+			label: t('status.await-payment'),
+			value: 'status.await-payment',
+			selected: false,
+		},
+		{
+			id: 8,
+			label: t('status.refund'),
+			value: 'status.refund',
+			selected: false,
+		},
+	];
+	const paymentMethods = [
+		{
+			id: 1,
+			label: t('payment-method.alipay'),
+			value: 'payment-method.alipay',
+			selected: false,
+		},
+		{
+			id: 2,
+			label: t('payment-method.bank'),
+			value: 'payment-method.bank',
+			selected: false,
+		},
+	];
+	const [statusFilterValues, setStatusFilterValues] = useState(statuses);
+	const [paymentMethodValues, setPaymentMethodValues] = useState(paymentMethods);
+
 	return (
 		<>
 			<div className='grid grid-cols-12 gap-6 mt-8'>
-				<div className='col-span-12 lg:col-span-3 2xl:col-span-2'>
+				<div className='col-span-12 lg:col-span-12 2xl:col-span-12'>
 					<h2 className='intro-y text-lg font-medium mr-auto mt-2'>Inbox</h2>
 				</div>
-				<div className='col-span-12 lg:col-span-9 2xl:col-span-10'>
-					{/* BEGIN: Inbox Filter */}
+				<div className='col-span-12 lg:col-span-12 2xl:col-span-12'>
+					{/* BEGIN: Filter */}
 					<div className='intro-y flex flex-col-reverse sm:flex-row items-center'>
-						<div className='w-full sm:w-auto relative mr-auto mt-3 sm:mt-0'>
-							<Lucide
-								icon='Search'
-								className='w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-slate-500'
-							/>
-							<input
-								type='text'
-								className='form-control w-full sm:w-64 box px-10'
-								placeholder='Search mail'
-							/>
-							<Dropdown
-								className='inbox-filter absolute inset-y-0 mr-3 right-0 flex items-center'
-								placement='bottom-start'
-							>
-								<DropdownToggle tag='a' role='button' className='w-4 h-4 block' href='#'>
-									<Lucide icon='ChevronDown' className='w-4 h-4 cursor-pointer text-slate-500' />
-								</DropdownToggle>
-								<DropdownMenu className='inbox-filter__dropdown-menu pt-2'>
-									<DropdownContent tag='div'>
-										<div className='grid grid-cols-12 gap-4 gap-y-3 p-3'>
-											<div className='col-span-6'>
-												<label htmlFor='input-filter-1' className='form-label text-xs'>
-													From
-												</label>
-												<input
-													id='input-filter-1'
-													type='text'
-													className='form-control flex-1'
-													placeholder='example@gmail.com'
-												/>
-											</div>
-											<div className='col-span-6'>
-												<label htmlFor='input-filter-2' className='form-label text-xs'>
-													To
-												</label>
-												<input
-													id='input-filter-2'
-													type='text'
-													className='form-control flex-1'
-													placeholder='example@gmail.com'
-												/>
-											</div>
-											<div className='col-span-6'>
-												<label htmlFor='input-filter-3' className='form-label text-xs'>
-													Subject
-												</label>
-												<input
-													id='input-filter-3'
-													type='text'
-													className='form-control flex-1'
-													placeholder='Important Meeting'
-												/>
-											</div>
-											<div className='col-span-6'>
-												<label htmlFor='input-filter-4' className='form-label text-xs'>
-													Has the Words
-												</label>
-												<input
-													id='input-filter-4'
-													type='text'
-													className='form-control flex-1'
-													placeholder='Job, Work, Documentation'
-												/>
-											</div>
-											<div className='col-span-6'>
-												<label htmlFor='input-filter-5' className='form-label text-xs'>
-													Doesn't Have
-												</label>
-												<input
-													id='input-filter-5'
-													type='text'
-													className='form-control flex-1'
-													placeholder='Job, Work, Documentation'
-												/>
-											</div>
-											<div className='col-span-6'>
-												<label htmlFor='input-filter-6' className='form-label text-xs'>
-													Size
-												</label>
-												<select id='input-filter-6' className='form-select flex-1'>
-													<option>10</option>
-													<option>25</option>
-													<option>35</option>
-													<option>50</option>
-												</select>
-											</div>
-											<div className='col-span-12 flex items-center mt-3'>
-												<button className='btn btn-secondary w-32 ml-auto'>
-													Create Filter
-												</button>
-												<button className='btn btn-primary w-32 ml-2'>Search</button>
-											</div>
-										</div>
-									</DropdownContent>
-								</DropdownMenu>
-							</Dropdown>
-						</div>
-						<div className='w-full sm:w-auto flex'>
-							<button className='btn btn-primary shadow-md mr-2'>Start a Video Call</button>
-							<Dropdown>
-								<DropdownToggle className='btn px-2 box'>
-									<span className='w-5 h-5 flex items-center justify-center'>
-										<Lucide icon='Plus' className='w-4 h-4' />
-									</span>
-								</DropdownToggle>
-								<DropdownMenu className='w-40'>
-									<DropdownContent>
-										<DropdownItem>
-											<Lucide icon='User' className='w-4 h-4 mr-2' /> Contacts
-										</DropdownItem>
-										<DropdownItem>
-											<Lucide icon='Settings' className='w-4 h-4 mr-2' /> Settings
-										</DropdownItem>
-									</DropdownContent>
-								</DropdownMenu>
-							</Dropdown>
+						<div className='w-full relative mr-auto mt-3 sm:mt-0 box bg-white p-2 flex flex-col'>
+							<div className='flex flex-row gap-3'>
+								<span className='self-center'>{t('dashboard.status')}</span>
+								<Selector
+									statuses={statusFilterValues}
+									multiple={true}
+									onChange={setStatusFilterValues}
+								></Selector>
+							</div>
+							<div className='flex flex-row gap-3'>
+								<span className='self-center'>{t('dashboard.payment-method')}</span>
+								<Selector
+									statuses={paymentMethodValues}
+									multiple={false}
+									onChange={setPaymentMethodValues}
+								></Selector>
+							</div>
+							<div className='grid grid-cols-12 gap-2 mt-5'>
+								<div className='col-span-3 flex flex-col'>
+									<label>{t('dashboard.request-code')}</label>
+									<input className='p-2 border-2 border-solid border-gray-200 focus-visible:border-primary'></input>
+								</div>
+								<div className='col-span-3 flex flex-col'>
+									<label>{t('dashboard.payment-account')}</label>
+									<input className='p-2 border-2 border-solid border-gray-200 focus-visible:border-primary'></input>
+								</div>
+								{/* <input className='col-span-3'></input> */}
+							</div>
 						</div>
 					</div>
 					{/* END: Inbox Filter */}
@@ -237,5 +219,3 @@ function Main() {
 		</>
 	);
 }
-
-export default Main;
