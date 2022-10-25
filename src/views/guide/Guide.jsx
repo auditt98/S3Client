@@ -2,7 +2,6 @@ import React from 'react';
 import { Lucide, Dropdown, DropdownToggle, DropdownMenu, DropdownContent, DropdownItem } from '@/base-components';
 import { faker as $f } from '@/utils';
 import classnames from 'classnames';
-import './styles.css';
 import { Outlet, useNavigate } from 'react-router-dom';
 // import { useTranslation } from 'react-i18next';
 
@@ -40,6 +39,7 @@ function classNames(...classes) {
 export default function Guide() {
 	const navigate = useNavigate();
 	// const { t } = useTranslation();
+
 	return (
 		<>
 			<div className='grid grid-cols-12 gap-6 mt-8'>
