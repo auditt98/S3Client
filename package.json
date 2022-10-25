@@ -9,7 +9,8 @@
 		"pretty": "prettier --write ./src/**/*.{js,jsx,ts,tsx,css,scss,less,html,json,md}",
 		"prepare": "husky install",
 		"lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
-		"commit": "cz"
+		"commit": "cz",
+		"zip": "node zip.js"
 	},
 	"dependencies": {
 		"@ckeditor/ckeditor5-build-balloon": "^29.1.0",
