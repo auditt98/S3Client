@@ -26,7 +26,7 @@ function Main() {
 									<h2 className='font-medium text-base mr-auto'>Basic Accordion</h2>
 									<div className='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
 										<label className='form-check-label ml-0' htmlFor='show-example-1'>
-											Show example code
+											Show example codeHello
 										</label>
 										<input
 											onClick={toggle}

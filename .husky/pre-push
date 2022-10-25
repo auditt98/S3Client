@@ -13,6 +13,6 @@ do
     if [ "$remote_ref" = "refs/heads/develop" ];
     then
         echo "npm run build && npm run deploy"
-        npm run zip
+        # npm run zip
     fi
 done
