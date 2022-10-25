@@ -12,6 +12,7 @@ do
     echo "Executing pre-push hook to build + deploy"
     if [ "$remote_ref" = "refs/heads/develop" ];
     then
-        npm run build && npm run deploy
+        echo "npm run build && npm run deploy"
+        # npm run zip
     fi
 done
