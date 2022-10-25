@@ -73,6 +73,7 @@ import Chart from '../views/chart/Main';
 import Slider from '../views/slider/Main';
 import ImageZoom from '../views/image-zoom/Main';
 import Dashboard from '../views/dashboard/Main';
+import Guide from '../views/guide/Guide';
 
 function Router() {
 	const routes = [
@@ -99,6 +100,18 @@ function Router() {
 				{
 					path: 'dashboard',
 					element: <Dashboard />,
+				},
+				{
+					path: 'transaction',
+					element: <Dashboard />,
+				},
+				{
+					path: 'payment-request',
+					element: <Dashboard />,
+				},
+				{
+					path: 'guide',
+					element: <Guide />,
 				},
 				{
 					path: 'categories',
