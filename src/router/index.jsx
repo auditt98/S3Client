@@ -72,7 +72,7 @@ import Validation from '../views/validation/Main';
 import Chart from '../views/chart/Main';
 import Slider from '../views/slider/Main';
 import ImageZoom from '../views/image-zoom/Main';
-import Dashboard from '../views/dashboard/Main';
+import Dashboard from '../views/dashboard/Dashboard';
 import Guide from '../views/guide/Guide';
 import Profile from './../views/guide/components/Profile';
 import Address from './../views/guide/components/Address';

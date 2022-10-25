@@ -23,3 +23,7 @@
 	border: 4px solid transparent;
 	background-clip: content-box;
 }
+
+button, input, optgroup, select, textarea:focus-visible{
+	outline: none;
+}
