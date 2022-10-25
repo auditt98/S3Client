@@ -74,6 +74,10 @@ import Slider from '../views/slider/Main';
 import ImageZoom from '../views/image-zoom/Main';
 import Dashboard from '../views/dashboard/Main';
 import Guide from '../views/guide/Guide';
+import Profile from './../views/guide/components/Profile';
+import Address from './../views/guide/components/Address';
+import Transactions from './../views/guide/components/Transactions';
+import Faqs from './../views/guide/components/Faqs';
 
 function Router() {
 	const routes = [
@@ -112,6 +116,24 @@ function Router() {
 				{
 					path: 'guide',
 					element: <Guide />,
+					children: [
+						{
+							path: '',
+							element: <Profile />,
+						},
+						{
+							path: 'address',
+							element: <Address />,
+						},
+						{
+							path: 'transactions',
+							element: <Transactions />,
+						},
+						{
+							path: 'faqs',
+							element: <Faqs />,
+						},
+					],
 				},
 				{
 					path: 'categories',
