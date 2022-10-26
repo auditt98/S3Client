@@ -134,6 +134,9 @@ const helpers = {
 		}
 		return tempColors;
 	},
+	classNames(...classes) {
+		return classes.filter(Boolean).join(' ');
+	},
 };
 
 export { helpers as helper };

@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
-const FormChangePassword = (props) => {
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+
+const FormChangePin = (props) => {
 	const [isShowPassword, setIsShowPassword] = useState({
-		currenPassword: false,
-		newPassword: false,
-		confirmPassword: false,
+		currenPin: false,
+		newPin: false,
+		confirmPin: false,
 	});
-	const { t } = useTranslation();
 
 	return (
 		<div className='grid lg:grid-cols-2 lg:gap-2 md:gap-1 sm:gap-1 '>
 			<div className='col-span-1 grid grid-cols-6 gap-6'>
 				<div className='col-span-6 sm:col-span-4'>
 					<label className='block text-sm  text-gray-700'>
-						{t('Mật khẩu hiện tại')} <span>*</span>
+						{t('Mã PIN cũ')} <span>*</span>
 					</label>
 					<div className='flex mt-1 items-center rounded-md relative  '>
 						<input
-							type={isShowPassword.currenPassword ? 'text' : 'password'}
+							type={isShowPassword.currenPin ? 'text' : 'password'}
 							autoComplete='new-password'
 							className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-white sm:text-sm'
 						/>
 						<div
 							className='h text-2xl absolute right-0 top-2'
 							onClick={() =>
-								setIsShowPassword({ ...isShowPassword, currenPassword: !isShowPassword.currenPassword })
+								setIsShowPassword({ ...isShowPassword, currenPin: !isShowPassword.currenPin })
 							}
 						>
-							{isShowPassword.currenPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+							{isShowPassword.currenPin ? <AiFillEye /> : <AiFillEyeInvisible />}
 						</div>
 					</div>
 				</div>
@@ -39,28 +38,26 @@ const FormChangePassword = (props) => {
 					</label>
 					<div className='flex mt-1 items-center rounded-md relative  '>
 						<input
-							type={isShowPassword.newPassword ? 'text' : 'password'}
+							type={isShowPassword.newPin ? 'text' : 'password'}
 							autoComplete='new-password'
 							className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-white sm:text-sm'
 						/>
 						<div
 							className='text-2xl absolute right-0 top-2'
-							onClick={() =>
-								setIsShowPassword({ ...isShowPassword, newPassword: !isShowPassword.newPassword })
-							}
+							onClick={() => setIsShowPassword({ ...isShowPassword, newPin: !isShowPassword.newPin })}
 						>
-							{isShowPassword.newPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+							{isShowPassword.newPin ? <AiFillEye /> : <AiFillEyeInvisible />}
 						</div>
 					</div>
 				</div>
 
 				<div className='col-span-6 sm:col-span-4'>
 					<label className='block text-sm  text-gray-700'>
-						{t('Nhập lại mật khẩu mới')} <span>*</span>
+						{t('Nhập lại mã PIN')} <span>*</span>
 					</label>
 					<div className='flex mt-1 items-center rounded-md relative  '>
 						<input
-							type={isShowPassword.confirmPassword ? 'text' : 'password'}
+							type={isShowPassword.confirmPin ? 'text' : 'password'}
 							autoComplete='new-password'
 							className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-white sm:text-sm'
 						/>
@@ -69,11 +66,11 @@ const FormChangePassword = (props) => {
 							onClick={() =>
 								setIsShowPassword({
 									...isShowPassword,
-									confirmPassword: !isShowPassword.confirmPassword,
+									confirmPin: !isShowPassword.confirmPin,
 								})
 							}
 						>
-							{isShowPassword.confirmPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+							{isShowPassword.confirmPin ? <AiFillEye /> : <AiFillEyeInvisible />}
 						</div>
 					</div>
 				</div>
@@ -95,4 +92,4 @@ const FormChangePassword = (props) => {
 	);
 };
 
-export default FormChangePassword;
+export default FormChangePin;
