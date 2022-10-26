@@ -78,7 +78,7 @@ export default function Dashboard() {
 		<>
 			<div className='grid grid-cols-12 gap-6 mt-8'>
 				<div className='col-span-12 lg:col-span-12 2xl:col-span-12'>
-					<h2 className='intro-y text-lg font-medium mr-auto mt-2'>Inbox</h2>
+					<h2 className='intro-y text-lg font-medium mr-auto mt-2'>{t('dashboard.title')}</h2>
 				</div>
 				<div className='col-span-12 lg:col-span-12 2xl:col-span-12'>
 					{/* BEGIN: Filter */}
@@ -108,6 +108,13 @@ export default function Dashboard() {
 								<div className='col-span-3 flex flex-col'>
 									<label>{t('dashboard.payment-account')}</label>
 									<input className='p-2 border-2 border-solid border-gray-200 focus-visible:border-primary'></input>
+								</div>
+								<div className='col-span-3 flex flex-col'>
+									<label>{t('dashboard.request_time')}</label>
+									<input
+										type='date'
+										className='p-2 border-2 border-solid border-gray-200 focus-visible:border-primary'
+									></input>
 								</div>
 								{/* <input className='col-span-3'></input> */}
 							</div>
