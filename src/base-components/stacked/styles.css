@@ -1,0 +1,19 @@
+.grow {
+	flex-grow: 1;
+}
+
+.grow-0 {
+	flex-grow: 0;
+}
+
+.animate-grow {
+	transition: flex-grow 1s ease;
+}
+
+.box-content::-webkit-scrollbar {
+	display: none;
+}
+
+.title {
+	transition: font-weight 0.5s ease-out;
+}
