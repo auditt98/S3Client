@@ -28,5 +28,6 @@ module.exports = {
 		'sonarjs/no-duplicate-string': 'warn',
 		'react/prop-types': 'warn',
 		'react/no-unescaped-entities': 'off',
+		'react/prop-types': 'off',
 	},
 };

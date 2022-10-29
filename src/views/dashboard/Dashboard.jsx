@@ -4,57 +4,69 @@ import classnames from 'classnames';
 import React, { useState } from 'react';
 import Selector from '../../components/selector/Selector';
 import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
+import CardRadio from '../../base-components/radios/CardRadio';
+import CardCheckbox from '../../base-components/checkboxes/CardCheckbox';
+import 'react-datepicker/dist/react-datepicker.css';
+import ReactDatePicker from 'react-datepicker';
+import { Combobox } from '@headlessui/react';
 
 export default function Dashboard() {
 	const { t } = useTranslation();
+	const form = useForm();
+	const {
+		register,
+		handleSubmit,
+		watch,
+		setValue,
+		formState: { errors },
+	} = form;
+	const onSubmit = (data) => {
+		console.log('data', data);
+	};
+
+	const people = ['Wade Cooper', 'Arlene McCoy', 'Devon Webb', 'Tom Cook', 'Tanya Fox', 'Hellen Schmidt'];
+
 	const statuses = [
 		{
 			id: 1,
 			label: t('status.cancel'),
 			value: 'status.cancel',
-			selected: false,
 		},
 		{
 			id: 2,
 			label: t('status.confirm'),
 			value: 'status.confirm',
-			selected: false,
 		},
 		{
 			id: 3,
 			label: t('status.pending'),
 			value: 'status.pending',
-			selected: false,
 		},
 		{
 			id: 4,
 			label: t('status.processing'),
 			value: 'status.processing',
-			selected: false,
 		},
 		{
 			id: 5,
 			label: t('status.reject'),
 			value: 'status.reject',
-			selected: false,
 		},
 		{
 			id: 6,
 			label: t('status.await-payment-request'),
 			value: 'status.await-payment-request',
-			selected: false,
 		},
 		{
 			id: 7,
 			label: t('status.await-payment'),
 			value: 'status.await-payment',
-			selected: false,
 		},
 		{
 			id: 8,
 			label: t('status.refund'),
 			value: 'status.refund',
-			selected: false,
 		},
 	];
 	const paymentMethods = [
@@ -62,17 +74,58 @@ export default function Dashboard() {
 			id: 1,
 			label: t('payment-method.alipay'),
 			value: 'payment-method.alipay',
-			selected: false,
 		},
 		{
 			id: 2,
 			label: t('payment-method.bank'),
 			value: 'payment-method.bank',
-			selected: false,
 		},
 	];
 	const [statusFilterValues, setStatusFilterValues] = useState(statuses);
 	const [paymentMethodValues, setPaymentMethodValues] = useState(paymentMethods);
+	const [date, setDate] = useState(new Date());
+
+	const [selectedPerson, setSelectedPerson] = useState(people[0]);
+	const [query, setQuery] = useState('');
+
+	const filteredPeople =
+		query === ''
+			? people
+			: people.filter((person) => {
+					return person.toLowerCase().includes(query.toLowerCase());
+			  });
+
+	const requestCodeRegister = register('requestCode', {
+		required: false,
+	});
+	const paymentAccountRegister = register('paymentAccount', {
+		required: false,
+	});
+
+	const paymentMethodRegister = register('paymentMethod', {
+		required: false,
+	});
+
+	const statusRegister = register('status', {
+		required: false,
+	});
+
+	const originalRequestCodeRegister = register('originalRequestCode', {
+		required: false,
+	});
+
+	const buyerAccountRegister = register('buyerAccount', {
+		required: false,
+	});
+	const statusTimeRegister = register('statusTime', {
+		required: false,
+	});
+	const statusTimeFromRegister = register('statusTimeFrom', {
+		required: false,
+	});
+	const statusTimeToRegister = register('statusTimeTo', {
+		required: false,
+	});
 
 	return (
 		<>
@@ -82,44 +135,119 @@ export default function Dashboard() {
 				</div>
 				<div className='col-span-12 lg:col-span-12 2xl:col-span-12'>
 					{/* BEGIN: Filter */}
-					<div className='intro-y flex flex-col-reverse sm:flex-row items-center'>
-						<div className='w-full relative mr-auto mt-3 sm:mt-0 box bg-white p-2 flex flex-col'>
-							<div className='flex flex-row gap-3'>
-								<span className='self-center'>{t('dashboard.status')}</span>
-								<Selector
-									statuses={statusFilterValues}
-									multiple={true}
-									onChange={setStatusFilterValues}
-								></Selector>
-							</div>
-							<div className='flex flex-row gap-3'>
-								<span className='self-center'>{t('dashboard.payment-method')}</span>
-								<Selector
-									statuses={paymentMethodValues}
-									multiple={false}
-									onChange={setPaymentMethodValues}
-								></Selector>
-							</div>
-							<div className='grid grid-cols-12 gap-2 mt-5'>
-								<div className='col-span-3 flex flex-col'>
-									<label>{t('dashboard.request-code')}</label>
-									<input className='p-2 border-2 border-solid border-gray-200 focus-visible:border-primary'></input>
+					<form onSubmit={handleSubmit(onSubmit)}>
+						<div className='intro-y flex flex-col-reverse sm:flex-row items-center'>
+							<div className='w-full relative mr-auto mt-3 sm:mt-0 box bg-white p-2 flex flex-col'>
+								<div className='flex flex-row gap-3 flex-wrap'>
+									<span className='self-center'>{t('dashboard.status')}</span>
+									<CardCheckbox options={statusFilterValues} register={statusRegister}></CardCheckbox>
 								</div>
-								<div className='col-span-3 flex flex-col'>
-									<label>{t('dashboard.payment-account')}</label>
-									<input className='p-2 border-2 border-solid border-gray-200 focus-visible:border-primary'></input>
+								<div className='flex flex-row gap-3 flex-wrap mt-4'>
+									<span className='self-center'>{t('dashboard.payment-method')}</span>
+									<CardRadio
+										form={form}
+										canUncheck={true}
+										register={paymentMethodRegister}
+										options={paymentMethodValues}
+									></CardRadio>
 								</div>
-								<div className='col-span-3 flex flex-col'>
-									<label>{t('dashboard.request_time')}</label>
-									<input
-										type='date'
-										className='p-2 border-2 border-solid border-gray-200 focus-visible:border-primary'
-									></input>
+								<div className='grid grid-cols-1 md:grid-cols-4 xl:grid-cols-12 gap-2 mt-4 gap-y-5'>
+									<div className='col-span-1 md:col-span-2 xl:col-span-4 flex flex-col'>
+										<label>{t('dashboard.request-code')}</label>
+										<input {...requestCodeRegister} type='text' className='form-control'></input>
+									</div>
+									<div className='col-span-1 md:col-span-2 xl:col-span-4 flex flex-col'>
+										<label>{t('dashboard.payment-account')}</label>
+										<Combobox value={selectedPerson} onChange={setSelectedPerson}>
+											<Combobox.Input onChange={(event) => setQuery(event.target.value)} />
+											<Combobox.Options>
+												{filteredPeople.map((person) => (
+													<Combobox.Option key={person} value={person}>
+														{person}
+													</Combobox.Option>
+												))}
+											</Combobox.Options>
+										</Combobox>
+										{/* <select {...paymentAccountRegister} className='form-select'>
+											<option value=''>Select...</option>
+											<option value='A'>Category A</option>
+											<option value='B'>Category B</option>
+										</select> */}
+									</div>
+									<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col'>
+										<label>{t('dashboard.request-time-start')}</label>
+										<ReactDatePicker
+											closeOnScroll={true}
+											className='form-control'
+											selected={date}
+											onChange={(d) => setDate(d)}
+										/>
+									</div>
+									<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col'>
+										<label>{t('dashboard.request-time-end')}</label>
+										<ReactDatePicker
+											closeOnScroll={true}
+											className='form-control'
+											selected={date}
+											onChange={(d) => setDate(d)}
+										/>
+										<input type='datetime-local'></input>
+									</div>
+									<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col'>
+										<label>{t('dashboard.original-request-code')}</label>
+										<input
+											{...originalRequestCodeRegister}
+											type='text'
+											className='form-control'
+										></input>
+									</div>
+									<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col'>
+										<label>{t('dashboard.buyer-account')}</label>
+										<input {...buyerAccountRegister} type='text' className='form-control'></input>
+									</div>
+									<div className='col-span-1 md:col-span-2 xl:col-span-2s flex flex-col'>
+										<label>{t('dashboard.status-time')}</label>
+										<select {...statusTimeRegister} className='form-select'>
+											{statuses.map((status) => {
+												return (
+													<option key={status.id} value={status.value}>
+														{status.label}
+													</option>
+												);
+											})}
+										</select>
+									</div>
+									<div className='col-span-1 md:col-span-2 xl:col-span-3 flex flex-col'>
+										<label>{t('dashboard.status-datefrom')}</label>
+										<ReactDatePicker
+											closeOnScroll={true}
+											className='form-control'
+											selected={date}
+											showTimeSelect
+											onChange={(d) => setDate(d)}
+										/>
+										{/* <input {...statusTimeFromRegister} type='text' className='form-control'></input> */}
+									</div>
+									<div className='col-span-1 md:col-span-2 xl:col-span-3 flex flex-col'>
+										<label>{t('dashboard.status-dateto')}</label>
+										<ReactDatePicker
+											closeOnScroll={true}
+											className='form-control'
+											selected={date}
+											showTimeSelect
+											onChange={(d) => setDate(d)}
+										/>
+										{/* <input {...statusTimeToRegister} type='text' className='form-control'></input> */}
+									</div>
 								</div>
-								{/* <input className='col-span-3'></input> */}
+								<div className='flex flex-row-reverse flex-wrap mt-4 cursor-pointer'>
+									<button type='submit' className='px-3 py-2 bg-primary rounded-md text-white'>
+										{t('dashboard.search')}
+									</button>
+								</div>
 							</div>
 						</div>
-					</div>
+					</form>
 					{/* END: Inbox Filter */}
 					{/* BEGIN: Inbox Content */}
 					<div className='intro-y inbox box mt-5'>

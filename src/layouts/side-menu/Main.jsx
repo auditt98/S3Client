@@ -33,7 +33,7 @@ function Main() {
 			<MobileMenu />
 			<div className='flex mt-[4.7rem] md:mt-0 h-screen overflow-hidden'>
 				{/* BEGIN: Side Menu */}
-				<nav className='side-nav custom-scrollbar'>
+				<nav className='side-nav'>
 					<Link to='/side-menu/dashboard-overview-1' className='intro-x flex items-center pl-5 pt-4 mt-3'>
 						<img alt='Tinker Tailwind HTML Admin Template' className='w-6' src={logoUrl} />
 						<span className='hidden xl:block text-white text-lg ml-3'> Ali33 </span>
