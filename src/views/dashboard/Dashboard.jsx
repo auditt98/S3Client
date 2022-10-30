@@ -10,6 +10,8 @@ import CardCheckbox from '../../base-components/checkboxes/CardCheckbox';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactDatePicker from 'react-datepicker';
 import { Combobox } from '@headlessui/react';
+import DatePicker from '../../base-components/DatePicker/DatePicker';
+import { DataTable, Table, TableHead, TableRow, TableHeader, TableBody, TableCell } from 'carbon-components-react';
 
 export default function Dashboard() {
 	const { t } = useTranslation();
@@ -127,6 +129,35 @@ export default function Dashboard() {
 		required: false,
 	});
 
+	const headers = [
+		{
+			key: 'name',
+			header: 'Name',
+		},
+		{
+			key: 'status',
+			header: 'Status',
+		},
+	];
+
+	const rows = [
+		{
+			id: 'a',
+			name: 'Load balancer 1',
+			status: 'Disabled',
+		},
+		{
+			id: 'b',
+			name: 'Load balancer 2',
+			status: 'Starting',
+		},
+		{
+			id: 'c',
+			name: 'Load balancer 3',
+			status: 'Active',
+		},
+	];
+
 	return (
 		<>
 			<div className='grid grid-cols-12 gap-6 mt-8'>
@@ -151,6 +182,7 @@ export default function Dashboard() {
 										options={paymentMethodValues}
 									></CardRadio>
 								</div>
+
 								<div className='grid grid-cols-1 md:grid-cols-4 xl:grid-cols-12 gap-2 mt-4 gap-y-5'>
 									<div className='col-span-1 md:col-span-2 xl:col-span-4 flex flex-col'>
 										<label>{t('dashboard.request-code')}</label>
@@ -185,13 +217,7 @@ export default function Dashboard() {
 									</div>
 									<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col'>
 										<label>{t('dashboard.request-time-end')}</label>
-										<ReactDatePicker
-											closeOnScroll={true}
-											className='form-control'
-											selected={date}
-											onChange={(d) => setDate(d)}
-										/>
-										<input type='datetime-local'></input>
+										<DatePicker></DatePicker>
 									</div>
 									<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col'>
 										<label>{t('dashboard.original-request-code')}</label>
@@ -251,102 +277,30 @@ export default function Dashboard() {
 					{/* END: Inbox Filter */}
 					{/* BEGIN: Inbox Content */}
 					<div className='intro-y inbox box mt-5'>
-						<div className='p-5 flex flex-col-reverse sm:flex-row text-slate-500 border-b border-slate-200/60'>
-							<div className='flex items-center mt-3 sm:mt-0 border-t sm:border-0 border-slate-200/60 pt-5 sm:pt-0 -mx-5 sm:mx-0 px-5 sm:px-0'>
-								<input className='form-check-input' type='checkbox' />
-								<Dropdown className='ml-1' placement='bottom-start'>
-									<DropdownToggle className='w-5 h-5 block' href='#'>
-										<Lucide icon='ChevronDown' className='w-5 h-5' />
-									</DropdownToggle>
-									<DropdownMenu className='w-32'>
-										<DropdownContent>
-											<DropdownItem>All</DropdownItem>
-											<DropdownItem>None</DropdownItem>
-											<DropdownItem>Read</DropdownItem>
-											<DropdownItem>Unread</DropdownItem>
-											<DropdownItem>Starred</DropdownItem>
-											<DropdownItem>Unstarred</DropdownItem>
-										</DropdownContent>
-									</DropdownMenu>
-								</Dropdown>
-								<a href='#' className='w-5 h-5 ml-5 flex items-center justify-center'>
-									<Lucide icon='RefreshCw' className='w-4 h-4' />
-								</a>
-								<a href='#' className='w-5 h-5 ml-5 flex items-center justify-center'>
-									<Lucide icon='MoreHorizontal' className='w-4 h-4' />
-								</a>
-							</div>
-							<div className='flex items-center sm:ml-auto'>
-								<div className=''>1 - 50 of 5,238</div>
-								<a href='#' className='w-5 h-5 ml-5 flex items-center justify-center'>
-									<Lucide icon='ChevronLeft' className='w-4 h-4' />
-								</a>
-								<a href='#' className='w-5 h-5 ml-5 flex items-center justify-center'>
-									<Lucide icon='ChevronRight' className='w-4 h-4' />
-								</a>
-								<a href='#' className='w-5 h-5 ml-5 flex items-center justify-center'>
-									<Lucide icon='Settings' className='w-4 h-4' />
-								</a>
-							</div>
-						</div>
-						<div className='overflow-x-auto sm:overflow-x-visible'>
-							{$f().map((faker, fakerKey) => (
-								<div key={fakerKey} className='intro-y'>
-									<div
-										className={classnames({
-											'inbox__item inline-block sm:block text-slate-600 dark:text-slate-500 bg-slate-100 dark:bg-darkmode-400/70 border-b border-slate-200/60 dark:border-darkmode-400': true,
-											'inbox__item--active': faker.trueFalse[0],
-										})}
-									>
-										<div className='flex px-5 py-3'>
-											<div className='w-72 flex-none flex items-center mr-5'>
-												<input
-													className='form-check-input flex-none'
-													type='checkbox'
-													checked={faker.trueFalse[0]}
-													onChange={() => {}}
-												/>
-												<a
-													href='#'
-													className='w-5 h-5 flex-none ml-4 flex items-center justify-center text-slate-400'
-												>
-													<Lucide icon='Star' className='w-4 h-4' />
-												</a>
-												<a
-													href='#'
-													className='w-5 h-5 flex-none ml-2 flex items-center justify-center text-slate-400'
-												>
-													<Lucide icon='Bookmark' className='w-4 h-4' />
-												</a>
-												<div className='w-6 h-6 flex-none image-fit relative ml-5'>
-													<img
-														alt='Midone Tailwind HTML Admin Template'
-														className='rounded-full'
-														src={faker.photos[0]}
-													/>
-												</div>
-												<div className='inbox__item--sender truncate ml-3'>
-													{faker.users[0].name}
-												</div>
-											</div>
-											<div className='w-64 sm:w-auto truncate'>
-												<span className='inbox__item--highlight'>
-													{faker.news[0].superShortContent}
-												</span>
-												{faker.news[0].shortContent}
-											</div>
-											<div className='inbox__item--time whitespace-nowrap ml-auto pl-10'>
-												{faker.times[0]}
-											</div>
-										</div>
-									</div>
-								</div>
-							))}
-						</div>
-						<div className='p-5 flex flex-col sm:flex-row items-center text-center sm:text-left text-slate-500'>
-							<div>4.41 GB (25%) of 17 GB used Manage</div>
-							<div className='sm:ml-auto mt-2 sm:mt-0'>Last account activity: 36 minutes ago</div>
-						</div>
+						<DataTable rows={rows} headers={headers}>
+							{({ rows, headers, getTableProps, getHeaderProps, getRowProps }) => (
+								<Table {...getTableProps()}>
+									<TableHead>
+										<TableRow>
+											{headers.map((header) => (
+												<TableHeader key={header} {...getHeaderProps({ header })}>
+													{header.header}
+												</TableHeader>
+											))}
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{rows.map((row) => (
+											<TableRow key={row} {...getRowProps({ row })}>
+												{row.cells.map((cell) => (
+													<TableCell key={cell.id}>{cell.value}</TableCell>
+												))}
+											</TableRow>
+										))}
+									</TableBody>
+								</Table>
+							)}
+						</DataTable>
 					</div>
 					{/* END: Inbox Content */}
 				</div>

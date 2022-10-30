@@ -99,7 +99,7 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [require('@tailwindcss/forms'), require('flowbite/plugin')],
+	plugins: [require('@tailwindcss/forms'), require('tw-elements/dist/plugin')],
 	variants: {
 		extend: {
 			boxShadow: ['dark'],
