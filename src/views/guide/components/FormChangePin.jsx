@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 const FormChangePin = (props) => {
+	const { t } = useTranslation();
+
 	const [isShowPassword, setIsShowPassword] = useState({
 		currenPin: false,
 		newPin: false,

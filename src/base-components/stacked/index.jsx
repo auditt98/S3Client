@@ -26,7 +26,7 @@ const Stacked = (props) => {
 
 	return (
 		<>
-			<Accordion open={open} icon={<Icon id={1} open={open} />} className='border-b'>
+			<Accordion open={open} icon={<Icon id={1} open={open} />} className={open ? 'border-b' : ''}>
 				<AccordionHeader onClick={() => handleOpen(1)} className='text-base p-4'>
 					{props?.dataDisplay?.title}
 				</AccordionHeader>
