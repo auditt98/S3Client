@@ -3,6 +3,9 @@ import pencilIcon from '@/assets/images/pencil.svg';
 import FormChangePassword from './FormChangePassword';
 import FormChangePin from './FormChangePin';
 import { useTranslation } from 'react-i18next';
+import { Modal } from '../../../base-components/modal';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+
 const Profile = () => {
 	const [showInput, setShowInput] = useState({
 		inputName: false,
@@ -12,6 +15,7 @@ const Profile = () => {
 		inputGender: false,
 		inputPhoneNumber: false,
 	});
+	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [isOpenForm, setIsOpenForm] = useState({ isOpenFormChangePassword: false, isOpenFormChangePin: false });
 	const { t } = useTranslation();
 
@@ -23,6 +27,43 @@ const Profile = () => {
 		<div>
 			{isOpenForm.isOpenFormChangePassword && <FormChangePassword onOpenForm={onOpenForm} />}
 			{isOpenForm.isOpenFormChangePin && <FormChangePin onOpenForm={onOpenForm} />}
+
+			<Modal show={isOpenModal} onHidden={() => setIsOpenModal(false)}>
+				<div className='p-4'>
+					<div className='py-5'>
+						<h2 className='font-bold text-primary text-2xl'>Vui lòng nhập mật khẩu</h2>
+					</div>
+					<div>
+						<div className='col-span-6 sm:col-span-4'>
+							<label className='block text-sm  text-gray-700'>{t('Vui lòng nhập mật khẩu')}</label>
+							<div className='flex mt-1 items-center rounded-md relative  '>
+								<input
+									type={true ? 'text' : 'password'}
+									autoComplete='new-password'
+									className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-white sm:text-sm'
+								/>
+								<div className='h text-2xl absolute right-0 top-2' onClick={() => {}}>
+									{false ? <AiFillEye /> : <AiFillEyeInvisible />}
+								</div>
+							</div>
+						</div>
+						<div className='flex justify-end py-6'>
+							<button
+								className='mr-2 px-7 py-2  border border-primary-500 bg-primary-500 text-primary rounded hover:text-blue-400'
+								onClick={() => {}}
+							>
+								Hủy bỏ
+							</button>
+							<button
+								className=' px-7 py-2  border border-primary-500 bg-blue-500 text-white rounded hover:bg-blue-400'
+								onClick={() => {}}
+							>
+								Xác nhận
+							</button>
+						</div>
+					</div>
+				</div>
+			</Modal>
 
 			{!isOpenForm.isOpenFormChangePassword && !isOpenForm.isOpenFormChangePin && (
 				<div>
@@ -210,7 +251,10 @@ const Profile = () => {
 						>
 							{t('Thay đổi mã PIN')}
 						</button>
-						<button className='mr-2 px-3 py-2 text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white rounded'>
+						<button
+							className='mr-2 px-3 py-2 text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white rounded'
+							onClick={() => setIsOpenModal(true)}
+						>
 							{t('Khôi phục mã PIN')}
 						</button>
 					</div>

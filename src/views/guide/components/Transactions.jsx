@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Selector from '../../../components/selector/Selector';
 import { BsArrowRepeat } from 'react-icons/bs';
+import DatePicker from './../../../base-components/DatePicker/DatePicker';
 
 const Transactions = () => {
 	const { t } = useTranslation();
@@ -53,19 +54,13 @@ const Transactions = () => {
 						<div className='px-2'>
 							<label className='block text-sm  text-gray-700'>{t('Nhập mã đơn, mã giao dịch')}: </label>
 							<div className='flex mt-1 items-center rounded-md relative  '>
-								<input
-									type='date'
-									className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-white sm:text-sm'
-								/>
+								<DatePicker />
 							</div>
 						</div>
 						<div className='px-2'>
 							<label className='block text-sm  text-gray-700'></label>
 							<div className='flex mt-1 items-center rounded-md relative  '>
-								<input
-									type='date'
-									className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-white sm:text-sm'
-								/>
+								<DatePicker />
 							</div>
 						</div>
 					</div>

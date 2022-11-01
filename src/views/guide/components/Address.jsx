@@ -1,17 +1,200 @@
+import { Dialog } from '@material-tailwind/react';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Modal } from '../../../base-components/modal';
+import { useForm } from 'react-hook-form';
 
 const Address = () => {
+	const { t } = useTranslation();
 	const [dataTable, setDataTable] = useState([
 		{ name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
 	]);
+	const [openFormModal, setOpenFormModal] = useState(false);
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors },
+	} = useForm();
+
+	const onCloseFormModal = () => {
+		setOpenFormModal(false);
+	};
+
+	const onOpenFormModal = () => {
+		setOpenFormModal(true);
+	};
+
+	const statuses = [
+		{
+			id: 1,
+			label: t('status.cancel'),
+			value: 'status.cancel',
+		},
+		{
+			id: 2,
+			label: t('status.confirm'),
+			value: 'status.confirm',
+		},
+		{
+			id: 3,
+			label: t('status.pending'),
+			value: 'status.pending',
+		},
+		{
+			id: 4,
+			label: t('status.processing'),
+			value: 'status.processing',
+		},
+		{
+			id: 5,
+			label: t('status.reject'),
+			value: 'status.reject',
+		},
+		{
+			id: 6,
+			label: t('status.await-payment-request'),
+			value: 'status.await-payment-request',
+		},
+		{
+			id: 7,
+			label: t('status.await-payment'),
+			value: 'status.await-payment',
+		},
+		{
+			id: 8,
+			label: t('status.refund'),
+			value: 'status.refund',
+		},
+	];
+
+	const onSubmit = (data) => {
+		console.log('data', data);
+	};
+
+	const nameAddressRegister = register('nameAddressRegister', {
+		required: false,
+	});
+
+	const phoneNumberRegister = register('phoneNumberRegister', {
+		required: false,
+	});
+
+	const addressRegister = register('addressRegister', {
+		required: false,
+	});
+
+	const cityNameRegister = register('cityNameRegister', {
+		required: false,
+	});
+
+	const districtNameRegister = register('districtNameRegister', {
+		required: false,
+	});
 
 	return (
 		<div>
+			<Modal show={openFormModal} onHidden={onCloseFormModal}>
+				<div className='p-5'>
+					<div className='px-4 py-6'>
+						<h2 className='text-primary font-bold text-2xl '>THÊM ĐỊA CHỈ MỚI</h2>
+					</div>
+					<form onSubmit={handleSubmit(onSubmit)}>
+						<div className='flex justify-between'>
+							<div>
+								<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col py-3'>
+									<label>{t('Họ tên*')}</label>
+									<input {...nameAddressRegister} type='text' className='form-control'></input>
+								</div>
+								<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col py-3'>
+									<label>{t('Điện thoại*')}</label>
+									<input {...phoneNumberRegister} type='text' className='form-control'></input>
+								</div>
+								<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col py-3'>
+									<label>{t('Địa chỉ *')}</label>
+									<input {...addressRegister} type='text' className='form-control'></input>
+								</div>
+							</div>
+							<div>
+								<div className='col-span-1 md:col-span-2 xl:col-span-2s flex flex-col py-3'>
+									<label>{t('Tỉnh/Thành phố *')}</label>
+									<select {...cityNameRegister} className='form-select'>
+										{statuses.map((status) => {
+											return (
+												<option key={status.id} value={status.value}>
+													{status.label}
+												</option>
+											);
+										})}
+									</select>
+								</div>
+								<div className='col-span-1 md:col-span-2 xl:col-span-2s flex flex-col py-3'>
+									<label>{t('Quận/Huyện *')}</label>
+									<select {...districtNameRegister} className='form-select'>
+										{statuses.map((status) => {
+											return (
+												<option key={status.id} value={status.value}>
+													{status.label}
+												</option>
+											);
+										})}
+									</select>
+								</div>
+								<div className='col-span-1 md:col-span-2 xl:col-span-2s flex flex-col py-3'>
+									<label>{t('Phường/Xã')}</label>
+									<select className='form-select'>
+										{statuses.map((status) => {
+											return (
+												<option key={status.id} value={status.value}>
+													{status.label}
+												</option>
+											);
+										})}
+									</select>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col py-3'>
+								<label>{t('Tên địa chỉ')}</label>
+								<input type='text' className='form-control'></input>
+							</div>
+							<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col'>
+								<textarea type='text' className='form-control'></textarea>
+							</div>
+						</div>
+						<div className='form-check mt-5'>
+							<input id='vertical-form-3' className='form-check-input' type='checkbox' value='' />
+							<label className='form-check-label' htmlFor='vertical-form-3'>
+								Đặt làm địa chỉ mặc định
+							</label>
+						</div>
+						<div className='flex justify-end py-6'>
+							<button
+								className='mr-2 px-7 py-2  border border-primary-500 bg-primary-500 text-primary rounded hover:text-blue-400'
+								onClick={() => {}}
+							>
+								Hủy bỏ
+							</button>
+							<button
+								className=' px-7 py-2  border border-primary-500 bg-blue-500 text-white rounded hover:bg-blue-400'
+								onClick={() => {}}
+							>
+								Thêm địa chỉ mới
+							</button>
+						</div>
+					</form>
+				</div>
+			</Modal>
+
 			<div className='flex justify-between pb-3 border-b-2'>
 				<p className='text-base'>Danh sách địa chỉ nhận hàng ({'1'})</p>
-				<button className='mr-2 px-7 py-2  border border-blue-500 bg-blue-500 text-white rounded hover:bg-blue-400'>
+				<button
+					className='mr-2 px-7 py-2  border border-blue-500 bg-blue-500 text-white rounded hover:bg-blue-400'
+					onClick={onOpenFormModal}
+				>
 					Thêm địa chỉ mới
-				</button>{' '}
+				</button>
 			</div>
 			<div>
 				<div className='mt-5 flex flex-col'>

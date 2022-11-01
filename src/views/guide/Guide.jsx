@@ -2,13 +2,14 @@ import React from 'react';
 import { Lucide, Dropdown, DropdownToggle, DropdownMenu, DropdownContent, DropdownItem } from '@/base-components';
 import { faker as $f } from '@/utils';
 import classnames from 'classnames';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { helper } from '@/utils/helper';
 
 export default function Guide() {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
+	let location = useLocation();
 
 	const LIST_MENU = [
 		{
@@ -53,7 +54,7 @@ export default function Guide() {
 								<li
 									key={menuItem.name}
 									className={helper.classNames(
-										menuItem.selected
+										menuItem.href === location.pathname
 											? 'bg-primary-50 border-indigo-700 text-indigo-600'
 											: 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900',
 										'group flex items-center px-5 py-4 text-sm font-medium border-r-4'
