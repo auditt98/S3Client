@@ -19,7 +19,7 @@ function Login() {
 	}, []);
 
 	const handleLogin = () => {
-		login({ identifier: email, password: password });
+		login({ email, password });
 	};
 
 	return (

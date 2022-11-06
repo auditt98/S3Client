@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { API } from '../../../constants/constants';
-import useAxios from 'axios-hooks';
+import { useAxios } from '../useAxios';
 
-export const useAuth = (params) => {
-	const [{ data, loading, error }, executeLogin] = useAxios(
-		{
-			url: API.AUTH.LOGIN,
-			method: 'POST',
-			data: params,
-		},
-		{
-			manual: true,
-		}
-	);
-	const login = async () => {
-		await executeLogin();
+export const useAuth = () => {
+	const { cancel, data, error, loading, execute } = useAxios(API.ADMIN.AUTH.LOGIN, 'POST', false);
+	const login = async (params) => {
+		await execute(params);
 	};
 	return { login, data, error };
 };

@@ -2,16 +2,17 @@ import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import axios from 'axios';
 import { useAuthHeader } from 'react-auth-kit';
 import { AxiosInstanceProvider } from '../../context-components/AxiosInstanceProvider';
+import { API } from '../../constants/constants';
+axios.defaults.baseURL = API.BASE_URL;
 
 /**
  * @param {string} [url = '']
  * @param {string} [method='GET']
- * @param {*} payload
  * @param {boolean} [autoRun=true]
  * @param {*} [config]
- * @return {*}
+ * @return {*} [cancel(), data, error, loading, execute()]
  */
-export const useAxios = (url, method = 'GET', payload, autoRun = true, config = {}) => {
+export const useAxios = (url, method = 'GET', autoRun = true, config = {}) => {
 	const [data, setData] = useState(null);
 	const [error, setError] = useState('');
 	const [loaded, setLoaded] = useState(false);
@@ -28,7 +29,7 @@ export const useAxios = (url, method = 'GET', payload, autoRun = true, config = 
 		controllerRef.current.abort();
 	};
 
-	const refetch = async () => {
+	const execute = async (payload) => {
 		try {
 			let requestData = {
 				signal: controllerRef.current.signal,
@@ -37,20 +38,20 @@ export const useAxios = (url, method = 'GET', payload, autoRun = true, config = 
 				url,
 				...config,
 			};
-			if (authHeader) {
+			if (authHeader()) {
 				requestData.headers = {
 					...requestData.headers,
-					Authorization: authHeader,
+					Authorization: authHeader(),
 				};
 			}
-			console.log('requestData', requestData);
 			const response = await instance.request(requestData);
 			setData(response.data);
 		} catch (e) {
 			if (axios.isCancel(e)) {
 				return;
 			}
-			setError(error.message);
+			setError(e);
+			throw e;
 		} finally {
 			setLoaded(true);
 		}
@@ -60,8 +61,8 @@ export const useAxios = (url, method = 'GET', payload, autoRun = true, config = 
 		if (!autoRun) {
 			return;
 		}
-		refetch();
+		execute();
 	}, []);
 
-	return { cancel, data, error, loaded, refetch };
+	return { cancel, data, error, loaded, execute };
 };
