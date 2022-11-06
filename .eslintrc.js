@@ -2,14 +2,16 @@ module.exports = {
 	env: {
 		browser: true,
 		es2021: true,
+		es6: true,
 	},
-	extends: ['plugin:react/recommended', 'prettier', 'plugin:sonarjs/recommended'],
+	extends: ['plugin:react/recommended', 'eslint:recommended', 'prettier', 'plugin:sonarjs/recommended'],
 	overrides: [],
 	parserOptions: {
 		ecmaVersion: 'latest',
+		allowImportExportEverywhere: true,
 		sourceType: 'module',
 	},
-	plugins: ['react', 'prettier', 'sonarjs'],
+	plugins: ['react', 'sonarjs', 'prettier'],
 	rules: {
 		'prettier/prettier': [
 			'error',
@@ -27,7 +29,7 @@ module.exports = {
 		'sonarjs/cognitive-complexity': 'warn',
 		'sonarjs/no-duplicate-string': 'warn',
 		'react/prop-types': 'warn',
-		'react/no-unescaped-entities': 'off',
-		'react/prop-types': 'off',
+		'no-unused-vars': 'warn',
+		'no-undef': 1,
 	},
 };

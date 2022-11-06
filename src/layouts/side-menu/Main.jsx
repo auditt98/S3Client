@@ -1,6 +1,6 @@
 import { Transition } from 'react-transition-group';
 import React, { useState, useEffect } from 'react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { helper as $h } from '@/utils';
 import { sideMenu as useSideMenuStore } from '@/stores/side-menu';
 import { useRecoilValue } from 'recoil';
@@ -13,6 +13,7 @@ import MobileMenu from '@/components/mobile-menu/Main';
 import MainColorSwitcher from '@/components/main-color-switcher/Main';
 import DarkModeSwitcher from '@/components/dark-mode-switcher/Main';
 import SideMenuTooltip from '@/components/side-menu-tooltip/Main';
+// import { useIsAuthenticated } from 'react-auth-kit';
 
 function Main() {
 	const navigate = useNavigate();
@@ -20,12 +21,14 @@ function Main() {
 	const [formattedMenu, setFormattedMenu] = useState([]);
 	const sideMenuStore = useRecoilValue(useSideMenuStore);
 	const sideMenu = () => nestedMenu($h.toRaw(sideMenuStore.menu), location);
-
 	useEffect(() => {
 		dom('body').removeClass('error-page').removeClass('login').addClass('main');
 		setFormattedMenu(sideMenu());
 	}, [sideMenuStore, location.pathname]);
-
+	// const isAuthenticated = useIsAuthenticated();
+	// if (!isAuthenticated()) {
+	// 	return <Navigate to='/login' replace={true} />;
+	// }
 	return (
 		<div className='py-5 md:py-0 -mx-3 px-3 sm:-mx-8 sm:px-8 bg-black/[0.15] dark:bg-transparent'>
 			<DarkModeSwitcher />

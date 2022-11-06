@@ -43,7 +43,7 @@ import InvoiceLayout2 from '../views/invoice-layout-2/Main';
 import FaqLayout1 from '../views/faq-layout-1/Main';
 import FaqLayout2 from '../views/faq-layout-2/Main';
 import FaqLayout3 from '../views/faq-layout-3/Main';
-import Login from '../views/login/Main';
+import Login from '../views/login/Login';
 import Register from '../views/register/Main';
 import ErrorPage from '../views/error-page/Main';
 import UpdateProfile from '../views/update-profile/Main';
@@ -78,12 +78,17 @@ import Profile from './../views/guide/components/Profile';
 import Address from './../views/guide/components/Address';
 import Transactions from './../views/guide/components/Transactions';
 import Faqs from './../views/guide/components/Faqs';
+import { RequireAuth } from 'react-auth-kit';
 
 function Router() {
 	const routes = [
 		{
 			path: '/',
-			element: <SideMenu />,
+			element: (
+				<RequireAuth loginPath={'/login'}>
+					<SideMenu />
+				</RequireAuth>
+			),
 			children: [
 				{
 					path: '/',
@@ -387,7 +392,11 @@ function Router() {
 		},
 		{
 			path: '/simple-menu',
-			element: <SimpleMenu />,
+			element: (
+				<RequireAuth loginPath={'/login'}>
+					<SimpleMenu />
+				</RequireAuth>
+			),
 			children: [
 				{
 					path: 'dashboard-overview-1',
@@ -657,7 +666,11 @@ function Router() {
 		},
 		{
 			path: '/top-menu',
-			element: <TopMenu />,
+			element: (
+				<RequireAuth loginPath={'/login'}>
+					<TopMenu />
+				</RequireAuth>
+			),
 			children: [
 				{
 					path: 'dashboard-overview-1',

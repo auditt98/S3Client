@@ -9,9 +9,9 @@ import CardRadio from '../../base-components/radios/CardRadio';
 import CardCheckbox from '../../base-components/checkboxes/CardCheckbox';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactDatePicker from 'react-datepicker';
-import { Combobox } from '@headlessui/react';
 import DatePicker from '../../base-components/DatePicker/DatePicker';
-import { DataTable, Table, TableHead, TableRow, TableHeader, TableBody, TableCell } from 'carbon-components-react';
+import { TomSelect } from '@/base-components';
+import { Link } from 'lucide-react';
 
 export default function Dashboard() {
 	const { t } = useTranslation();
@@ -131,8 +131,40 @@ export default function Dashboard() {
 
 	const headers = [
 		{
-			key: 'name',
-			header: 'Name',
+			key: 'request_code',
+			header: 'Request code',
+		},
+		{
+			key: 'request_time',
+			header: 'Request time',
+		},
+		{
+			key: 'foreign_currency_amount',
+			header: 'Amount of foreign currency',
+		},
+		{
+			key: 'transaction_value',
+			header: 'Transaction value',
+		},
+		{
+			key: 'service_fee',
+			header: 'Service fee',
+		},
+		{
+			key: 'total_money',
+			header: 'Total money',
+		},
+		{
+			key: 'payment_account',
+			header: 'Payment account',
+		},
+		{
+			key: 'org_receipt_code',
+			header: 'Original receipt code',
+		},
+		{
+			key: 'note',
+			header: 'Note',
 		},
 		{
 			key: 'status',
@@ -144,7 +176,7 @@ export default function Dashboard() {
 		{
 			id: 'a',
 			name: 'Load balancer 1',
-			status: 'Disabled',
+			status: <Link>asd</Link>,
 		},
 		{
 			id: 'b',
@@ -190,21 +222,22 @@ export default function Dashboard() {
 									</div>
 									<div className='col-span-1 md:col-span-2 xl:col-span-4 flex flex-col'>
 										<label>{t('dashboard.payment-account')}</label>
-										<Combobox value={selectedPerson} onChange={setSelectedPerson}>
-											<Combobox.Input onChange={(event) => setQuery(event.target.value)} />
-											<Combobox.Options>
-												{filteredPeople.map((person) => (
-													<Combobox.Option key={person} value={person}>
+										<TomSelect
+											value={selectedPerson}
+											onChange={setSelectedPerson}
+											options={{
+												placeholder: 'Select your favorite actors',
+											}}
+											className='w-full'
+										>
+											{people.map((person) => {
+												return (
+													<option key={person} value={person}>
 														{person}
-													</Combobox.Option>
-												))}
-											</Combobox.Options>
-										</Combobox>
-										{/* <select {...paymentAccountRegister} className='form-select'>
-											<option value=''>Select...</option>
-											<option value='A'>Category A</option>
-											<option value='B'>Category B</option>
-										</select> */}
+													</option>
+												);
+											})}
+										</TomSelect>
 									</div>
 									<div className='col-span-1 md:col-span-2 xl:col-span-2 flex flex-col'>
 										<label>{t('dashboard.request-time-start')}</label>
@@ -276,32 +309,7 @@ export default function Dashboard() {
 					</form>
 					{/* END: Inbox Filter */}
 					{/* BEGIN: Inbox Content */}
-					<div className='intro-y inbox box mt-5'>
-						<DataTable rows={rows} headers={headers}>
-							{({ rows, headers, getTableProps, getHeaderProps, getRowProps }) => (
-								<Table {...getTableProps()}>
-									<TableHead>
-										<TableRow>
-											{headers.map((header) => (
-												<TableHeader key={header} {...getHeaderProps({ header })}>
-													{header.header}
-												</TableHeader>
-											))}
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{rows.map((row) => (
-											<TableRow key={row} {...getRowProps({ row })}>
-												{row.cells.map((cell) => (
-													<TableCell key={cell.id}>{cell.value}</TableCell>
-												))}
-											</TableRow>
-										))}
-									</TableBody>
-								</Table>
-							)}
-						</DataTable>
-					</div>
+					<div className='intro-y inbox box mt-5'></div>
 					{/* END: Inbox Content */}
 				</div>
 			</div>

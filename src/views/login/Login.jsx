@@ -1,13 +1,26 @@
+import React, { useEffect, useState } from 'react';
 import DarkModeSwitcher from '@/components/dark-mode-switcher/Main';
 import dom from '@left4code/tw-starter/dist/js/dom';
 import logoUrl from '@/assets/images/logo.svg';
 import illustrationUrl from '@/assets/images/illustration.svg';
-import React, { useEffect } from 'react';
+import { useSignIn } from 'react-auth-kit';
+import { useAuth } from '../../hooks/axios/auth/useAuth';
 
-function Main() {
+function Login() {
+	const signIn = useSignIn();
+
+	//use state for login
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const { login } = useAuth();
+
 	useEffect(() => {
 		dom('body').removeClass('main').removeClass('error-page').addClass('login');
 	}, []);
+
+	const handleLogin = () => {
+		login({ identifier: email, password: password });
+	};
 
 	return (
 		<>
@@ -49,11 +62,15 @@ function Main() {
 								</div>
 								<div className='intro-x mt-8'>
 									<input
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
 										type='text'
 										className='intro-x login__input form-control py-3 px-4 block'
 										placeholder='Email'
 									/>
 									<input
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
 										type='password'
 										className='intro-x login__input form-control py-3 px-4 block mt-4'
 										placeholder='Password'
@@ -73,7 +90,10 @@ function Main() {
 									<a href=''>Forgot Password?</a>
 								</div>
 								<div className='intro-x mt-5 xl:mt-8 text-center xl:text-left'>
-									<button className='btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top'>
+									<button
+										className='btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top'
+										onClick={handleLogin}
+									>
 										Login
 									</button>
 									<button className='btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top'>
@@ -100,4 +120,4 @@ function Main() {
 	);
 }
 
-export default Main;
+export default Login;

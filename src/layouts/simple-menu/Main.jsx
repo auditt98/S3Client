@@ -1,6 +1,6 @@
 import { Transition } from 'react-transition-group';
 import React, { useState, useEffect } from 'react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { helper as $h } from '@/utils';
 import { simpleMenu as useSimpleMenuStore } from '@/stores/simple-menu';
 import { useRecoilValue } from 'recoil';
@@ -12,6 +12,7 @@ import TopBar from '@/components/top-bar/Main';
 import MobileMenu from '@/components/mobile-menu/Main';
 import MainColorSwitcher from '@/components/main-color-switcher/Main';
 import DarkModeSwitcher from '@/components/dark-mode-switcher/Main';
+// import { useIsAuthenticated } from 'react-auth-kit';
 
 function Main() {
 	const navigate = useNavigate();
@@ -19,7 +20,10 @@ function Main() {
 	const [formattedMenu, setFormattedMenu] = useState([]);
 	const simpleMenuStore = useRecoilValue(useSimpleMenuStore);
 	const simpleMenu = () => nestedMenu($h.toRaw(simpleMenuStore.menu), location);
-
+	const isAuthenticated = useIsAuthenticated();
+	// if (!isAuthenticated()) {
+	// 	return <Navigate to='/login' replace={true} />;
+	// }
 	useEffect(() => {
 		dom('body').removeClass('error-page').removeClass('login').addClass('main');
 		setFormattedMenu(simpleMenu());
