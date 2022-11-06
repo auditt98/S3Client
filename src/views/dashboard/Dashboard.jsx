@@ -12,6 +12,7 @@ import ReactDatePicker from 'react-datepicker';
 import DatePicker from '../../base-components/DatePicker/DatePicker';
 import { TomSelect } from '@/base-components';
 import { Link } from 'lucide-react';
+import Table from '../../base-components/table/Table';
 
 export default function Dashboard() {
 	const { t } = useTranslation();
@@ -309,7 +310,9 @@ export default function Dashboard() {
 					</form>
 					{/* END: Inbox Filter */}
 					{/* BEGIN: Inbox Content */}
-					<div className='intro-y inbox box mt-5'></div>
+					<div className='intro-y inbox box mt-5'>
+						<Table></Table>
+					</div>
 					{/* END: Inbox Content */}
 				</div>
 			</div>

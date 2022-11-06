@@ -21,10 +21,12 @@ import classnames from 'classnames';
 import MobileMenu from '@/components/mobile-menu/Main';
 import MainColorSwitcher from '@/components/main-color-switcher/Main';
 import DarkModeSwitcher from '@/components/dark-mode-switcher/Main';
+import { useSignOut } from 'react-auth-kit';
 // import { useIsAuthenticated } from 'react-auth-kit';
 
 function Main() {
 	const [searchDropdown, setSearchDropdown] = useState(false);
+	const signOut = useSignOut();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [formattedMenu, setFormattedMenu] = useState([]);
@@ -228,7 +230,7 @@ function Main() {
 									<Lucide icon='HelpCircle' className='w-4 h-4 mr-2' /> Help
 								</DropdownItem>
 								<DropdownDivider className='border-white/[0.08]' />
-								<DropdownItem className='hover:bg-white/5'>
+								<DropdownItem className='hover:bg-white/5' onClick={() => signOut()}>
 									<Lucide icon='ToggleRight' className='w-4 h-4 mr-2' /> Logout
 								</DropdownItem>
 							</DropdownContent>

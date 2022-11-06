@@ -46,6 +46,7 @@ export const useAxios = (url, method = 'GET', autoRun = true, config = {}) => {
 			}
 			const response = await instance.request(requestData);
 			setData(response.data);
+			return response;
 		} catch (e) {
 			if (axios.isCancel(e)) {
 				return;

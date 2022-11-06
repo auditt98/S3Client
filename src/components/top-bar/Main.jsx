@@ -13,8 +13,10 @@ import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
 import classnames from 'classnames';
 import React from 'react';
+import { useSignOut } from 'react-auth-kit';
 
 function Main(props) {
+	const signOut = useSignOut();
 	const [searchDropdown, setSearchDropdown] = useState(false);
 	const showSearchDropdown = () => {
 		setSearchDropdown(true);
@@ -198,7 +200,7 @@ function Main(props) {
 								<Lucide icon='HelpCircle' className='w-4 h-4 mr-2' /> Help
 							</DropdownItem>
 							<DropdownDivider className='border-white/[0.08]' />
-							<DropdownItem className='hover:bg-white/5'>
+							<DropdownItem className='hover:bg-white/5' onClick={() => signOut()}>
 								<Lucide icon='ToggleRight' className='w-4 h-4 mr-2' /> Logout
 							</DropdownItem>
 						</DropdownContent>
