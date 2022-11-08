@@ -2,7 +2,7 @@ import DarkModeSwitcher from '@/components/dark-mode-switcher/Main';
 import dom from '@left4code/tw-starter/dist/js/dom';
 import logoUrl from '@/assets/images/logo.svg';
 import illustrationUrl from '@/assets/images/illustration.svg';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, useWatch } from 'react-hook-form';
 
@@ -66,7 +66,41 @@ function Register() {
 		handleSubmit,
 		control,
 		formState: { errors },
+		watch,
 	} = useForm();
+	const password = useRef({});
+	password.current = watch('password', '');
+
+	let msgError = '';
+	if (Object.keys(errors).length !== 0) {
+		switch (true) {
+			case errors?.fullName?.type === 'required':
+				msgError = 'Full Name is required';
+				break;
+			case errors?.email?.type === 'required':
+				msgError = 'Password is required';
+				break;
+			case errors?.password?.type === 'required':
+				msgError = 'Password is required';
+				break;
+			case errors?.confirmPassword?.type === 'required':
+				msgError = 'Confirm password is required';
+				break;
+			case errors?.terms?.type === 'required':
+				msgError = 'Term must be checked';
+				break;
+
+			case errors?.password?.type === 'minLength':
+				msgError = 'Password must be 6 characters long';
+				break;
+
+			case errors?.confirmPassword?.type === 'validate':
+				msgError = 'The passwords do not match';
+				break;
+
+			default:
+		}
+	}
 
 	const onSubmit = (data) => console.log(data);
 
@@ -110,21 +144,33 @@ function Register() {
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className='intro-x mt-8'>
 										<input
-											{...register('Full name', { required: true })}
+											{...register('fullName', { required: true })}
 											type='text'
-											className='intro-x login__input form-control py-3 px-4 block'
+											className={`${
+												Object.keys(errors).length > 0 && errors?.fullName
+													? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
+													: 'intro-x login__input form-control py-3 px-4 block mt-4'
+											}`}
 											placeholder='Full Name'
 										/>
 										<input
-											{...register('Email', { required: true, pattern: /^\S+@\S+$/i })}
+											{...register('email', { required: true, pattern: /^\S+@\S+$/i })}
 											type='text'
-											className='intro-x login__input form-control py-3 px-4 block mt-4'
+											className={`${
+												Object.keys(errors).length > 0 && errors?.email
+													? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
+													: 'intro-x login__input form-control py-3 px-4 block mt-4'
+											}`}
 											placeholder='Email'
 										/>
 										<input
-											{...register('Password', { required: true, minLength: 6 })}
+											{...register('password', { required: true, minLength: 6 })}
 											type='password'
-											className='intro-x login__input form-control py-3 px-4 block mt-4'
+											className={`${
+												Object.keys(errors).length > 0 && errors?.password
+													? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
+													: 'intro-x login__input form-control py-3 px-4 block mt-4'
+											}`}
 											placeholder='Password'
 										/>
 										<div className='intro-x w-full grid grid-cols-12 gap-4 h-1 mt-3'>
@@ -141,15 +187,22 @@ function Register() {
 											{/* bg-slate-100 dark:bg-darkmode-800  */}
 										</div>
 										<input
-											{...register('Confirm Password', { required: true })}
+											{...register('confirmPassword', {
+												required: true,
+												validate: (value) => value === password.current,
+											})}
 											type='password'
-											className='intro-x login__input form-control py-3 px-4 block mt-4'
+											className={`${
+												Object.keys(errors).length > 0 && errors?.confirmPassword
+													? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
+													: 'intro-x login__input form-control py-3 px-4 block mt-4'
+											}`}
 											placeholder='Password Confirmation'
 										/>
 									</div>
 									<div className='intro-x flex items-center text-slate-600 dark:text-slate-500 mt-4 text-xs sm:text-sm'>
 										<input
-											{...register('Terms', { required: true })}
+											{...register('terms', { required: true })}
 											id='remember-me'
 											type='checkbox'
 											className='form-check-input border mr-2'
@@ -161,8 +214,10 @@ function Register() {
 											Privacy Policy
 										</a>
 										.
-										<div>{`Valid: ${passwordState.valid}| Strength: ${passwordState.strength} | Error: ${passwordState.error} | Empty: ${passwordState.empty} | Match: ${passwordState.match}`}</div>
 									</div>
+
+									<div className='mt-4 text-danger'>{msgError}</div>
+
 									<div className='intro-x mt-5 xl:mt-8 text-center xl:text-left'>
 										<button
 											type='submit'
