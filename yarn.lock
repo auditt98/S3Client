@@ -3402,6 +3402,11 @@ lucide@^0.17.2:
   resolved "https://registry.yarnpkg.com/lucide/-/lucide-0.17.17.tgz#81190721dc4468284ca3876d3ae6a6aa3a91b8ec"
   integrity sha512-bB0SdfHIfyUMbD2CyR7WXI3RvLugA839SfJIwqrWiqK9e+HCj4aTwcm0Ft47p9SdI5Q/asYcauQEg9E5Q0iUYA==
 
+luxon@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.1.0.tgz#9ac33d7142b7ea18d4ec8583cdeb0b079abef60d"
+  integrity sha512-7w6hmKC0/aoWnEsmPCu5Br54BmbmUp5GfcqBxQngRcXJ+q5fdfjEzn7dxmJh2YdDhgW8PccYtlWKSv4tQkrTQg==
+
 make-error@^1.1.1:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/make-error/-/make-error-1.3.6.tgz#2eb2e37ea9b67c4891f684a1394799af484cf7a2"

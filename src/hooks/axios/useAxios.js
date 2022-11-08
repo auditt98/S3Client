@@ -10,7 +10,7 @@ axios.defaults.baseURL = API.BASE_URL;
  * @param {string} [method='GET']
  * @param {boolean} [autoRun=true]
  * @param {*} [config]
- * @return {*} [cancel(), data, error, loading, execute()]
+ * @return {object} hook [cancel(), data, error, loading, execute()]
  */
 export const useAxios = (url, method = 'GET', autoRun = true, config = {}) => {
 	const [data, setData] = useState(null);

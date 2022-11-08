@@ -5,6 +5,8 @@ import illustrationUrl from '@/assets/images/illustration.svg';
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, useWatch } from 'react-hook-form';
+import { useAuth } from '../../hooks/axios/auth/useAuth';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '../../base-components/modal';
 
 function PasswordStrengthDisplay({ control }) {
 	const passwordStrengthChecker = (password) => {
@@ -61,6 +63,9 @@ function PasswordStrengthDisplay({ control }) {
 
 function Register() {
 	const [passwordState, setPasswordState] = React.useState({});
+	const { login, register: registerUser, registerAPI } = useAuth();
+	const [showModalError, setShowModalError] = React.useState(false);
+	const [errorMsg, setErrorMsg] = React.useState('');
 	const {
 		register,
 		handleSubmit,
@@ -102,7 +107,21 @@ function Register() {
 		}
 	}
 
-	const onSubmit = (data) => console.log(data);
+	const onSubmit = async (data) => {
+		try {
+			let result = await registerUser({
+				name: data.fullName,
+				email: data.email,
+				password: data.password,
+			});
+		} catch (error) {
+			console.log('e', error);
+			if (error.response.data.message === 'Email already taken') {
+				setErrorMsg('This email has already been taken');
+				setShowModalError(true);
+			}
+		}
+	};
 
 	useEffect(() => {
 		dom('body').removeClass('main').removeClass('error-page').addClass('login');
@@ -111,6 +130,28 @@ function Register() {
 	return (
 		<>
 			<div>
+				<Modal
+					show={showModalError}
+					onHidden={() => {
+						setShowModalError(false);
+					}}
+				>
+					<ModalHeader>
+						<h4 className='text-lg'>Error</h4>
+					</ModalHeader>
+					<ModalBody className=''>{errorMsg}</ModalBody>
+					<ModalFooter>
+						<button
+							type='button'
+							onClick={() => {
+								setShowModalError(false);
+							}}
+							className='btn btn-outline-primary w-20 mr-1'
+						>
+							Close
+						</button>
+					</ModalFooter>
+				</Modal>
 				<DarkModeSwitcher />
 				<div className='container sm:px-10'>
 					<div className='block xl:grid grid-cols-2 gap-4'>
@@ -173,19 +214,6 @@ function Register() {
 											}`}
 											placeholder='Password'
 										/>
-										<div className='intro-x w-full grid grid-cols-12 gap-4 h-1 mt-3'>
-											<PasswordStrengthDisplay control={control}></PasswordStrengthDisplay>
-											{/* <div
-												className={`col-span-4 h-full rounded ${passwordStrengthColor(1)}`}
-											></div>
-											<div
-												className={`col-span-4 h-full rounded ${passwordStrengthColor(2)}`}
-											></div>
-											<div
-												className={`col-span-4 h-full rounded ${passwordStrengthColor(3)}`}
-											></div> */}
-											{/* bg-slate-100 dark:bg-darkmode-800  */}
-										</div>
 										<input
 											{...register('confirmPassword', {
 												required: true,
