@@ -5,6 +5,7 @@ import logoUrl from '@/assets/images/logo.svg';
 import illustrationUrl from '@/assets/images/illustration.svg';
 import { useSignIn } from 'react-auth-kit';
 import { useAuth } from '../../hooks/axios/auth/useAuth';
+import { Link } from 'react-router-dom';
 
 function Login() {
 	const signIn = useSignIn();
@@ -96,9 +97,12 @@ function Login() {
 									>
 										Login
 									</button>
-									<button className='btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top'>
+									<Link
+										to='/register'
+										className='btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top'
+									>
 										Register
-									</button>
+									</Link>
 								</div>
 								<div className='intro-x mt-10 xl:mt-24 text-slate-600 dark:text-slate-500 text-center xl:text-left'>
 									By signin up, you agree to our

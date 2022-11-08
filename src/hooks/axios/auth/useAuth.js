@@ -10,21 +10,21 @@ export const useAuth = () => {
 	const signIn = useSignIn();
 	const login = async (params) => {
 		let result = await execute(params);
+		console.log('result', result);
 		if (result && result.data && result.data.data) {
-			console.log('result', result);
-			if (
-				signIn({
-					token: result.data.data.token,
-					tokenType: 'Bearer',
-					authState: result.data.data.user,
-					expiresIn: 10080,
-				})
-			) {
-				//use navigate
-				navigate('/');
-			} else {
-				throw new Error('Error logging in');
-			}
+			// if (
+			// 	signIn({
+			// 		token: result.data.data.token,
+			// 		tokenType: 'Bearer',
+			// 		authState: result.data.data.user,
+			// 		expiresIn: 10080,
+			// 	})
+			// ) {
+			// 	//use navigate
+			// 	navigate('/');
+			// } else {
+			// 	throw new Error('Error logging in');
+			// }
 		}
 	};
 	return { login, data, error };
