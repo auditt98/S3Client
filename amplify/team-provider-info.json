@@ -1,0 +1,33 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-s3client-staging-142516-authRole",
+      "UnauthRoleArn": "arn:aws:iam::975549171442:role/amplify-s3client-staging-142516-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::975549171442:role/amplify-s3client-staging-142516-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-s3client-staging-142516-deployment",
+      "UnauthRoleName": "amplify-s3client-staging-142516-unauthRole",
+      "StackName": "amplify-s3client-staging-142516",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:975549171442:stack/amplify-s3client-staging-142516/798e8d00-73df-11ed-9965-020feb9c10b6",
+      "AmplifyAppId": "d3gbpim2g0n5yl"
+    },
+    "categories": {
+      "api": {
+        "S3Client": {},
+        "s3cAPI": {}
+      },
+      "storage": {
+        "s3clientdynamo": {}
+      },
+      "function": {
+        "s3cRegisterUserFunc": {
+          "deploymentBucketName": "amplify-s3client-staging-142516-deployment",
+          "s3Key": "amplify-builds/s3cRegisterUserFunc-6572567141576f613363-build.zip"
+        }
+      },
+      "auth": {
+        "s3cCognito": {}
+      }
+    }
+  }
+}

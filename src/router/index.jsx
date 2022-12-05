@@ -78,16 +78,17 @@ import Profile from './../views/guide/components/Profile';
 import Address from './../views/guide/components/Address';
 import Transactions from './../views/guide/components/Transactions';
 import Faqs from './../views/guide/components/Faqs';
-import { RequireAuth } from 'react-auth-kit';
+import RegisterConfirm from '../views/register-confirm/RegisterConfirm';
+import { RequireAuthentication } from '../components/wrappers/RequireAuthentication';
 
 function Router() {
 	const routes = [
 		{
 			path: '/',
 			element: (
-				<RequireAuth loginPath={'/login'}>
+				<RequireAuthentication>
 					<SideMenu />
-				</RequireAuth>
+				</RequireAuthentication>
 			),
 			children: [
 				{
@@ -393,9 +394,9 @@ function Router() {
 		{
 			path: '/simple-menu',
 			element: (
-				<RequireAuth loginPath={'/login'}>
+				<RequireAuthentication>
 					<SimpleMenu />
-				</RequireAuth>
+				</RequireAuthentication>
 			),
 			children: [
 				{
@@ -667,9 +668,9 @@ function Router() {
 		{
 			path: '/top-menu',
 			element: (
-				<RequireAuth loginPath={'/login'}>
+				<RequireAuthentication loginPath={'/login'}>
 					<TopMenu />
-				</RequireAuth>
+				</RequireAuthentication>
 			),
 			children: [
 				{
@@ -945,6 +946,10 @@ function Router() {
 		{
 			path: '/register',
 			element: <Register />,
+		},
+		{
+			path: '/register-confirm',
+			element: <RegisterConfirm />,
 		},
 		{
 			path: '/error-page',

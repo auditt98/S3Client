@@ -5,67 +5,10 @@ import illustrationUrl from '@/assets/images/illustration.svg';
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, useWatch } from 'react-hook-form';
-import { useAuth } from '../../hooks/axios/auth/useAuth';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from '../../base-components/modal';
-
-function PasswordStrengthDisplay({ control }) {
-	const passwordStrengthChecker = (password) => {
-		let valid = false;
-		let strength = 'Weak';
-		let strongRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
-		let mediumRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
-		let weakRegex = /(?=.{6,})/;
-		if (strongRegex.test(password)) {
-			valid = true;
-			strength = 'Strong';
-		} else if (mediumRegex.test(password)) {
-			valid = true;
-			strength = 'Medium';
-		} else if (weakRegex.test(password)) {
-			valid = true;
-		}
-		return { valid, strength };
-	};
-
-	const passwordStrengthColor = (position, strength, valid) => {
-		switch (strength) {
-			case 'Weak':
-				if (position <= 1 && valid) return 'bg-danger';
-				break;
-			case 'Medium':
-				if (position <= 2 && valid) return 'bg-warning';
-				break;
-			// eslint-disable-next-line no-fallthrough
-			case 'Strong':
-				if (position <= 3 && valid) return 'bg-success';
-				break;
-			// eslint-disable-next-line no-fallthrough
-			default:
-				return 'bg-slate-100 dark:bg-darkmode-800';
-		}
-		return 'bg-slate-100 dark:bg-darkmode-800';
-	};
-
-	let password = useWatch({
-		control,
-		name: 'Password', // without supply name will watch the entire form, or ['firstName', 'lastName'] to watch both
-	});
-	let { valid, strength } = passwordStrengthChecker(password);
-
-	return (
-		<>
-			<div className={`col-span-4 h-full rounded ${passwordStrengthColor(1, strength, valid)}`}></div>
-			<div className={`col-span-4 h-full rounded ${passwordStrengthColor(2, strength, valid)}`}></div>
-			<div className={`col-span-4 h-full rounded ${passwordStrengthColor(3, strength, valid)}`}></div>
-		</>
-	);
-}
+import { useAuthentication } from '../../hooks/auth/useAuthentication';
 
 function Register() {
-	const [passwordState, setPasswordState] = React.useState({});
-	const { login, register: registerUser, registerAPI } = useAuth();
-	const [showModalError, setShowModalError] = React.useState(false);
-	const [errorMsg, setErrorMsg] = React.useState('');
+	const { signIn, signUp, confirmSignUp } = useAuthentication();
 	const {
 		register,
 		handleSubmit,
@@ -73,85 +16,49 @@ function Register() {
 		formState: { errors },
 		watch,
 	} = useForm();
-	const password = useRef({});
-	password.current = watch('password', '');
-
-	let msgError = '';
-	if (Object.keys(errors).length !== 0) {
-		switch (true) {
-			case errors?.fullName?.type === 'required':
-				msgError = 'Full Name is required';
-				break;
-			case errors?.email?.type === 'required':
-				msgError = 'Password is required';
-				break;
-			case errors?.password?.type === 'required':
-				msgError = 'Password is required';
-				break;
-			case errors?.confirmPassword?.type === 'required':
-				msgError = 'Confirm password is required';
-				break;
-			case errors?.terms?.type === 'required':
-				msgError = 'Term must be checked';
-				break;
-
-			case errors?.password?.type === 'minLength':
-				msgError = 'Password must be 6 characters long';
-				break;
-
-			case errors?.confirmPassword?.type === 'validate':
-				msgError = 'The passwords do not match';
-				break;
-
-			default:
-		}
-	}
-
-	const onSubmit = async (data) => {
-		try {
-			let result = await registerUser({
-				name: data.fullName,
-				email: data.email,
-				password: data.password,
-			});
-		} catch (error) {
-			console.log('e', error);
-			if (error.response.data.message === 'Email already taken') {
-				setErrorMsg('This email has already been taken');
-				setShowModalError(true);
-			}
-		}
-	};
 
 	useEffect(() => {
 		dom('body').removeClass('main').removeClass('error-page').addClass('login');
 	}, []);
 
+	const onSubmit = async (data) => {
+		try {
+			let result = await signUp({
+				email: data.email,
+				password: data.password,
+				attributes: {
+					email: data.email,
+				},
+			});
+			if (result && result.userSub) {
+				// {
+				// 	userSub: 'string',
+				// 	userConfirmed: true,
+				// 	user: {
+				// 		authenticationFlowType: 'string',
+				// 		username: 'string',
+				// 	},
+				// 	codeDeliveryDetails: {
+				// 		AttributeName: 'string',
+				// 		DeliveryMedium: 'string',
+				// 		Destination: 'string',
+				// 	},
+				// }
+
+				//redirect to confirm page
+
+				//call api to create user in dynamodb
+
+				console.log('res', result);
+			}
+		} catch (error) {
+			console.log('error registering', error);
+		}
+	};
+
 	return (
 		<>
 			<div>
-				<Modal
-					show={showModalError}
-					onHidden={() => {
-						setShowModalError(false);
-					}}
-				>
-					<ModalHeader>
-						<h4 className='text-lg'>Error</h4>
-					</ModalHeader>
-					<ModalBody className=''>{errorMsg}</ModalBody>
-					<ModalFooter>
-						<button
-							type='button'
-							onClick={() => {
-								setShowModalError(false);
-							}}
-							className='btn btn-outline-primary w-20 mr-1'
-						>
-							Close
-						</button>
-					</ModalFooter>
-				</Modal>
 				<DarkModeSwitcher />
 				<div className='container sm:px-10'>
 					<div className='block xl:grid grid-cols-2 gap-4'>
@@ -185,73 +92,25 @@ function Register() {
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className='intro-x mt-8'>
 										<input
-											{...register('fullName', { required: true })}
+											{...register('email', { required: true })}
 											type='text'
-											className={`${
-												Object.keys(errors).length > 0 && errors?.fullName
-													? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
-													: 'intro-x login__input form-control py-3 px-4 block mt-4'
-											}`}
-											placeholder='Full Name'
-										/>
-										<input
-											{...register('email', { required: true, pattern: /^\S+@\S+$/i })}
-											type='text'
-											className={`${
-												Object.keys(errors).length > 0 && errors?.email
-													? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
-													: 'intro-x login__input form-control py-3 px-4 block mt-4'
-											}`}
+											className={` intro-x login__input form-control py-3 px-4 block mt-4`}
 											placeholder='Email'
 										/>
 										<input
-											{...register('password', { required: true, minLength: 6 })}
+											{...register('password', { required: true })}
 											type='password'
-											className={`${
-												Object.keys(errors).length > 0 && errors?.password
-													? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
-													: 'intro-x login__input form-control py-3 px-4 block mt-4'
-											}`}
+											className={`intro-x login__input form-control py-3 px-4 block mt-4`}
 											placeholder='Password'
 										/>
-										<input
-											{...register('confirmPassword', {
-												required: true,
-												validate: (value) => value === password.current,
-											})}
-											type='password'
-											className={`${
-												Object.keys(errors).length > 0 && errors?.confirmPassword
-													? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
-													: 'intro-x login__input form-control py-3 px-4 block mt-4'
-											}`}
-											placeholder='Password Confirmation'
-										/>
 									</div>
-									<div className='intro-x flex items-center text-slate-600 dark:text-slate-500 mt-4 text-xs sm:text-sm'>
-										<input
-											{...register('terms', { required: true })}
-											id='remember-me'
-											type='checkbox'
-											className='form-check-input border mr-2'
-										/>
-										<label className='cursor-pointer select-none' htmlFor='remember-me'>
-											I agree to the
-										</label>
-										<a className='text-primary dark:text-slate-200 ml-1' href=''>
-											Privacy Policy
-										</a>
-										.
-									</div>
-
-									<div className='mt-4 text-danger'>{msgError}</div>
 
 									<div className='intro-x mt-5 xl:mt-8 text-center xl:text-left'>
 										<button
 											type='submit'
 											className='btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top'
 										>
-											Register
+											Sign Up
 										</button>
 										<Link
 											to='/login'

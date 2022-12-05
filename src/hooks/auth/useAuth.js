@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { API } from '../../../constants/constants';
-import { useAxios } from '../useAxios';
+import { API } from '../../constants/constants';
+import { useAxios } from '../axios/useAxios';
 import { useSignIn } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 import { DateTime } from 'luxon';

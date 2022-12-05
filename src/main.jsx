@@ -9,6 +9,11 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
+import { Amplify, API } from 'aws-amplify';
+import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
+API.configure(awsconfig);
 
 root.render(
 	<QueryClientProvider client={queryClient}>

@@ -1,0 +1,29 @@
+{
+  "resourceName": "s3clientdynamo",
+  "tableName": "Users",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "email",
+    "fieldType": "string"
+  },
+  "gsi": [
+    {
+      "name": "emailAccessKeySecretGSI",
+      "partitionKey": {
+        "fieldName": "email",
+        "fieldType": "string"
+      }
+    },
+    {
+      "name": "usernameAccessKeySecret",
+      "partitionKey": {
+        "fieldName": "username",
+        "fieldType": "string"
+      }
+    }
+  ],
+  "triggerFunctions": []
+}
