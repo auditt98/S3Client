@@ -80,6 +80,8 @@ import Transactions from './../views/guide/components/Transactions';
 import Faqs from './../views/guide/components/Faqs';
 import RegisterConfirm from '../views/register-confirm/RegisterConfirm';
 import { RequireAuthentication } from '../components/wrappers/RequireAuthentication';
+import ForgotPassword from '../views/forgot-password/ForgotPassword';
+import ForgotPasswordConfirm from '../views/forgot-password/ForgotPasswordConfirm';
 
 function Router() {
 	const routes = [
@@ -954,6 +956,14 @@ function Router() {
 		{
 			path: '/error-page',
 			element: <ErrorPage />,
+		},
+		{
+			path: '/forgot-password',
+			element: <ForgotPassword />,
+		},
+		{
+			path: '/forgot-password-confirm',
+			element: <ForgotPasswordConfirm />,
 		},
 		{
 			path: '*',

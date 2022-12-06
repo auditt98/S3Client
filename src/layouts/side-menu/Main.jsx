@@ -39,7 +39,7 @@ function Main() {
 				<nav className='side-nav'>
 					<Link to='/side-menu/dashboard-overview-1' className='intro-x flex items-center pl-5 pt-4 mt-3'>
 						<img alt='Tinker Tailwind HTML Admin Template' className='w-6' src={logoUrl} />
-						<span className='hidden xl:block text-white text-lg ml-3'> Ali33 </span>
+						<span className='hidden xl:block text-white text-lg ml-3'> S3Client </span>
 					</Link>
 					<div className='side-nav__devider my-6'></div>
 					<ul>

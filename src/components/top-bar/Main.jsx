@@ -13,10 +13,10 @@ import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
 import classnames from 'classnames';
 import React from 'react';
-import { useSignOut } from 'react-auth-kit';
+import { useAuthentication } from '../../hooks/auth/useAuthentication';
 
 function Main(props) {
-	const signOut = useSignOut();
+	const { signOut } = useAuthentication();
 	const [searchDropdown, setSearchDropdown] = useState(false);
 	const showSearchDropdown = () => {
 		setSearchDropdown(true);

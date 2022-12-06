@@ -9,32 +9,17 @@ import { Link } from 'react-router-dom';
 import { API, Auth } from 'aws-amplify';
 import { useAuthentication } from '../../hooks/auth/useAuthentication';
 import { useForm } from 'react-hook-form';
-import {
-	Lucide,
-	Dropdown,
-	DropdownToggle,
-	DropdownMenu,
-	DropdownContent,
-	DropdownItem,
-	Modal,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
-	TinySlider,
-	PreviewComponent,
-	Preview,
-	Source,
-	Highlight,
-} from '@/base-components';
+import { useLocation } from 'react-router-dom';
+import { Lucide, Modal, ModalBody } from '@/base-components';
 import { useNavigate } from 'react-router-dom';
 import { ERRORS } from '../../constants/constants';
 
-function Login() {
+function ForgotPasswordConfirm() {
 	const [showNotificationModal, setNotificationModal] = useState(false);
 	const [modalText, setModalText] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
-
 	let navigate = useNavigate();
+	const { state } = useLocation();
 	const {
 		register,
 		handleSubmit,
@@ -43,7 +28,7 @@ function Login() {
 		watch,
 	} = useForm();
 
-	const { signIn } = useAuthentication();
+	const { forgotPassword, forgotPasswordSubmit } = useAuthentication();
 
 	useEffect(() => {
 		dom('body').removeClass('main').removeClass('error-page').addClass('login');
@@ -51,9 +36,9 @@ function Login() {
 
 	const onSubmit = async (data) => {
 		try {
-			let res = await signIn({ email: data.email, password: data.password });
-			if (res && res.username) {
-				navigate('/dashboard');
+			let res = await forgotPasswordSubmit({ email: data.email, code: data.code, password: data.password });
+			if (res) {
+				navigate('/login');
 			}
 		} catch (e) {
 			let errorCode = e['code'];
@@ -128,10 +113,6 @@ function Login() {
 									className='-intro-x w-1/2 -mt-16'
 									src={illustrationUrl}
 								/>
-								<div className='-intro-x text-white font-medium text-4xl leading-tight mt-10'>
-									A few more clicks to <br />
-									sign in to your account.
-								</div>
 								{/* <div className='-intro-x mt-5 text-lg text-white text-opacity-70 dark:text-slate-400'>
 									Manage all your e-commerce accounts in one place
 								</div> */}
@@ -142,70 +123,88 @@ function Login() {
 						<div className='h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0'>
 							<div className='my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto'>
 								<h2 className='intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left'>
-									Sign In
+									Reset password confirmation
 								</h2>
-								<div className='intro-x mt-2 text-slate-400 xl:hidden text-center'>
-									A few more clicks to sign in to your account. Manage all your e-commerce accounts in
-									one place
-								</div>
+								<h5 className='intro-x mt-4 text-center xl:text-left'>
+									We have sent you an email with a link to reset your password.
+								</h5>
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className='intro-x mt-8'>
 										<div className='h-fit relative'>
+											<label className=' text-gray-700 text-sm font-bold' htmlFor='email'>
+												Email
+											</label>
 											<input
 												{...register('email', { required: true })}
+												id='email'
 												type='text'
-												className={`${
-													Object.keys(errors).length > 0 && errors?.fullName
-														? 'intro-x login__input form-control py-3 px-4 block mt-4 border-input-err'
-														: 'intro-x login__input form-control py-3 px-4 block mt-4'
-												}`}
+												defaultValue={state.email || ''}
+												className={`intro-x login__input form-control py-3 px-4 block mb-4`}
 												placeholder='Email'
 											/>
 										</div>
 										<div className='h-fit relative'>
-											<input
-												{...register('password', { required: true })}
-												type={showPassword ? 'text' : 'password'}
-												className={`intro-x login__input form-control py-3 px-4 block mt-4 relative pr-16`}
-												placeholder='Password'
-											/>
-											<div className='absolute flex flex-col justify-center top-0 right-2 rounded-full z-50 h-full'>
-												{showPassword && (
-													<div
-														className='w-12 h-8 text-center bg-primary text-white flex flex-col justify-center rounded-lg cursor-pointer border-solid border-2 border-primary'
-														onClick={() => {
-															setShowPassword(false);
-														}}
-													>
-														Hide
-													</div>
-												)}
-												{!showPassword && (
-													<div
-														className='w-12 h-8 text-center bg-neutral-100 text-gray-500 flex flex-col justify-center rounded-lg cursor-pointer  border-solid border-2 border-gray-200'
-														onClick={() => {
-															setShowPassword(true);
-														}}
-													>
-														Show
-													</div>
-												)}
+											<label className=' text-gray-700 text-sm font-bold' htmlFor='password'>
+												New Password
+											</label>
+											<div className='h-fit relative'>
+												<input
+													{...register('password', { required: true })}
+													type={showPassword ? 'text' : 'password'}
+													id='password'
+													className={`intro-x login__input form-control py-3 px-4 block mb-4`}
+													placeholder='New password'
+												/>
+												<div className='absolute flex flex-col justify-center top-0 right-2 rounded-full z-50 h-full'>
+													{showPassword && (
+														<div
+															className='w-12 h-8 text-center bg-primary text-white flex flex-col justify-center rounded-lg cursor-pointer border-solid border-2 border-primary'
+															onClick={() => {
+																setShowPassword(false);
+															}}
+														>
+															Hide
+														</div>
+													)}
+													{!showPassword && (
+														<div
+															className='w-12 h-8 text-center bg-neutral-100 text-gray-500 flex flex-col justify-center rounded-lg cursor-pointer  border-solid border-2 border-gray-200'
+															onClick={() => {
+																setShowPassword(true);
+															}}
+														>
+															Show
+														</div>
+													)}
+												</div>
 											</div>
+										</div>
+										<div className='h-fit relative'>
+											<label className=' text-gray-700 text-sm font-bold' htmlFor='code'>
+												Verification Code
+											</label>
+											<input
+												{...register('code', { required: true })}
+												type='text'
+												id='code'
+												className={`intro-x login__input form-control py-3 px-4 block`}
+												placeholder='Verification Code'
+											></input>
 										</div>
 									</div>
 
 									<div className='intro-x mt-5 xl:mt-8 text-center xl:text-left'>
 										<button
 											type='submit'
-											className='btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top'
+											className='btn btn-primary py-3 px-4 w-full xl:w-40 xl:mr-3 align-top'
 										>
-											Sign In
+											Reset password
 										</button>
 										<Link
-											to='/register'
+											to='/login'
 											className='btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top'
 										>
-											Sign Up
+											Sign In
 										</Link>
 									</div>
 								</form>
@@ -220,8 +219,8 @@ function Login() {
 											Remember me
 										</label>
 									</div> */}
-									<Link to='/forgot-password' href=''>
-										Forgot Password?
+									<Link to='/register' href=''>
+										Don't have an account?
 									</Link>
 								</div>
 							</div>
@@ -234,4 +233,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default ForgotPasswordConfirm;

@@ -2,33 +2,57 @@ import React from 'react';
 import { API, Auth } from 'aws-amplify';
 import awsConfig from '../../aws-exports';
 import { useNavigate } from 'react-router-dom';
-import { API as APIRoute } from '../../constants/constants';
-import { DateTime } from 'luxon';
 
 export const useAuthentication = () => {
+	const navigate = useNavigate();
+
 	const signIn = async ({ email, password, ...params } = params) => {
-		let loginResult = await Auth.signIn(email, password);
-		console.log('loginResult', loginResult);
+		return await Auth.signIn(email, password);
 	};
 
 	const signUp = async ({ email, password, ...params } = params) => {
-		let result = await Auth.signUp({
-			username: email,
+		return await Auth.signUp({
+			email,
 			password: password,
 			attributes: {
 				email: email,
 			},
 		});
-		console.log('registerResult', result);
+	};
+
+	const forgotPasswordSubmit = async ({ email, code, password, ...params } = params) => {
+		console.log('forgotPasswordSubmit', email, code, password);
+		return await Auth.forgotPasswordSubmit(email, code, password);
+	};
+
+	const forgotPassword = async ({ email, ...params } = params) => {
+		return await Auth.forgotPassword(email);
 	};
 
 	const confirmSignUp = async ({ email, code, ...params } = params) => {
-		let result = await Auth.confirmSignUp(email, code);
-		console.log('confirmSignUpResult', result);
+		return await Auth.confirmSignUp(email, code);
+	};
+
+	const resendSignUp = async ({ email, ...params } = params) => {
+		return await Auth.resendSignUp(email);
 	};
 
 	const checkIsAuthenticated = async () => {
 		return await Auth.currentAuthenticatedUser();
 	};
-	return { signIn, signUp, confirmSignUp, checkIsAuthenticated };
+
+	const signOut = async () => {
+		await Auth.signOut();
+		navigate('/login');
+	};
+	return {
+		signIn,
+		signUp,
+		confirmSignUp,
+		resendSignUp,
+		checkIsAuthenticated,
+		signOut,
+		forgotPassword,
+		forgotPasswordSubmit,
+	};
 };

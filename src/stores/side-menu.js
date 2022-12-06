@@ -10,21 +10,6 @@ const sideMenu = atom({
 				pathname: '/dashboard',
 			},
 			{
-				title: 'Transaction',
-				icon: 'Home',
-				pathname: '/transaction',
-			},
-			{
-				title: 'Payment Request',
-				icon: 'Home',
-				pathname: '/payment-request',
-			},
-			{
-				title: 'Guide',
-				icon: 'Home',
-				pathname: '/guide',
-			},
-			{
 				icon: 'Home',
 				title: 'Dashboard',
 				subMenu: [

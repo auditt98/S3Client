@@ -22,11 +22,12 @@ import MobileMenu from '@/components/mobile-menu/Main';
 import MainColorSwitcher from '@/components/main-color-switcher/Main';
 import DarkModeSwitcher from '@/components/dark-mode-switcher/Main';
 import { useSignOut } from 'react-auth-kit';
+import { useAuthentication } from '@/hooks/auth/useAuthentication';
 // import { useIsAuthenticated } from 'react-auth-kit';
 
 function Main() {
 	const [searchDropdown, setSearchDropdown] = useState(false);
-	const signOut = useSignOut();
+	const { signOut } = useAuthentication();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [formattedMenu, setFormattedMenu] = useState([]);

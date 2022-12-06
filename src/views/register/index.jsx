@@ -9,12 +9,14 @@ import { useAuthentication } from '../../hooks/auth/useAuthentication';
 
 function Register() {
 	const { signIn, signUp, confirmSignUp } = useAuthentication();
+	const [showPassword, setShowPassword] = React.useState(false);
 	const {
 		register,
 		handleSubmit,
 		control,
 		formState: { errors },
 		watch,
+		getValues,
 	} = useForm();
 
 	useEffect(() => {
@@ -91,18 +93,44 @@ function Register() {
 								<div className='intro-x mt-2 text-slate-400 dark:text-slate-400 xl:hidden text-center'></div>
 								<form onSubmit={handleSubmit(onSubmit)}>
 									<div className='intro-x mt-8'>
-										<input
-											{...register('email', { required: true })}
-											type='text'
-											className={` intro-x login__input form-control py-3 px-4 block mt-4`}
-											placeholder='Email'
-										/>
-										<input
-											{...register('password', { required: true })}
-											type='password'
-											className={`intro-x login__input form-control py-3 px-4 block mt-4`}
-											placeholder='Password'
-										/>
+										<div className='h-fit relative'>
+											<input
+												{...register('email', { required: true })}
+												type='text'
+												className={` intro-x login__input form-control py-3 px-4 block mt-4`}
+												placeholder='Email'
+											/>
+										</div>
+										<div className='h-fit relative'>
+											<input
+												{...register('password', { required: true })}
+												type={showPassword ? 'text' : 'password'}
+												className={`intro-x login__input form-control py-3 px-4 block mt-4`}
+												placeholder='Password'
+											/>
+											<div className='absolute flex flex-col justify-center top-0 right-2 rounded-full z-50 h-full'>
+												{showPassword && (
+													<div
+														className='w-12 h-8 text-center bg-primary text-white flex flex-col justify-center rounded-lg cursor-pointer border-solid border-2 border-primary'
+														onClick={() => {
+															setShowPassword(false);
+														}}
+													>
+														Hide
+													</div>
+												)}
+												{!showPassword && (
+													<div
+														className='w-12 h-8 text-center bg-neutral-100 text-gray-500 flex flex-col justify-center rounded-lg cursor-pointer  border-solid border-2 border-gray-200'
+														onClick={() => {
+															setShowPassword(true);
+														}}
+													>
+														Show
+													</div>
+												)}
+											</div>
+										</div>
 									</div>
 
 									<div className='intro-x mt-5 xl:mt-8 text-center xl:text-left'>

@@ -22,7 +22,7 @@
       "function": {
         "s3cRegisterUserFunc": {
           "deploymentBucketName": "amplify-s3client-staging-142516-deployment",
-          "s3Key": "amplify-builds/s3cRegisterUserFunc-6572567141576f613363-build.zip"
+          "s3Key": "amplify-builds/s3cRegisterUserFunc-74524c64535931797a34-build.zip"
         }
       },
       "auth": {
