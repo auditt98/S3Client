@@ -12,7 +12,7 @@ export const useAuthentication = () => {
 
 	const signUp = async ({ email, password, ...params } = params) => {
 		return await Auth.signUp({
-			email,
+			username: email,
 			password: password,
 			attributes: {
 				email: email,

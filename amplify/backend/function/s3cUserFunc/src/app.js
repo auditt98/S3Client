@@ -26,7 +26,7 @@ const partitionKeyType = 'S';
 const sortKeyName = 'email';
 const sortKeyType = 'S';
 const hasSortKey = sortKeyName !== '';
-const path = '/users/register';
+const path = '/users';
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
@@ -57,41 +57,41 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
-// app.get(path + hashKeyPath, function (req, res) {
-// 	const condition = {};
-// 	condition[partitionKeyName] = {
-// 		ComparisonOperator: 'EQ',
-// 	};
+app.get(path + hashKeyPath, function (req, res) {
+	const condition = {};
+	condition[partitionKeyName] = {
+		ComparisonOperator: 'EQ',
+	};
 
-// 	if (userIdPresent && req.apiGateway) {
-// 		condition[partitionKeyName]['AttributeValueList'] = [
-// 			req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH,
-// 		];
-// 	} else {
-// 		try {
-// 			condition[partitionKeyName]['AttributeValueList'] = [
-// 				convertUrlType(req.params[partitionKeyName], partitionKeyType),
-// 			];
-// 		} catch (err) {
-// 			res.statusCode = 500;
-// 			res.json({ error: 'Wrong column type ' + err });
-// 		}
-// 	}
+	if (userIdPresent && req.apiGateway) {
+		condition[partitionKeyName]['AttributeValueList'] = [
+			req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH,
+		];
+	} else {
+		try {
+			condition[partitionKeyName]['AttributeValueList'] = [
+				convertUrlType(req.params[partitionKeyName], partitionKeyType),
+			];
+		} catch (err) {
+			res.statusCode = 500;
+			res.json({ error: 'Wrong column type ' + err });
+		}
+	}
 
-// 	let queryParams = {
-// 		TableName: tableName,
-// 		KeyConditions: condition,
-// 	};
+	let queryParams = {
+		TableName: tableName,
+		KeyConditions: condition,
+	};
 
-// 	dynamodb.query(queryParams, (err, data) => {
-// 		if (err) {
-// 			res.statusCode = 500;
-// 			res.json({ error: 'Could not load items: ' + err });
-// 		} else {
-// 			res.json(data.Items);
-// 		}
-// 	});
-// });
+	dynamodb.query(queryParams, (err, data) => {
+		if (err) {
+			res.statusCode = 500;
+			res.json({ error: 'Could not load items: ' + err });
+		} else {
+			res.json(data.Items);
+		}
+	});
+});
 
 /*****************************************
  * HTTP Get method for get single object *
@@ -164,37 +164,8 @@ const convertUrlType = (param, type) => {
 /************************************
  * HTTP post method for insert object *
  *************************************/
-const getCircularReplacer = () => {
-	const seen = new WeakSet();
-	return (key, value) => {
-		if (typeof value === 'object' && value !== null) {
-			if (seen.has(value)) {
-				return;
-			}
-			seen.add(value);
-		}
-		return value;
-	};
-};
 
-app.get(path, function (req, res) {
-	res.statusCode = 200;
-	res.send(
-		JSON.stringify(
-			{
-				success: true,
-				data: req,
-			},
-			getCircularReplacer()
-		)
-	);
-	// res.json({
-	// 	success: true,
-	// 	data: req,
-	// });
-});
-
-app.post(path, function (req, res) {
+app.post(path + '/register', function (req, res) {
 	if (userIdPresent) {
 		req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
 	}

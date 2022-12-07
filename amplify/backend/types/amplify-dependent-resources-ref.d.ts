@@ -5,7 +5,7 @@ export type AmplifyDependentResourcesAttributes = {
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         },
-        "s3cAPI": {
+        "s3cUserAPI": {
             "RootUrl": "string",
             "ApiName": "string",
             "ApiId": "string"
@@ -25,6 +25,18 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "function": {
         "s3cRegisterUserFunc": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "addUserFunc": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "s3cUserFunc": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

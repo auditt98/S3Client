@@ -3,13 +3,27 @@ import dom from '@left4code/tw-starter/dist/js/dom';
 import logoUrl from '@/assets/images/logo.svg';
 import illustrationUrl from '@/assets/images/illustration.svg';
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, useWatch } from 'react-hook-form';
 import { useAuthentication } from '../../hooks/auth/useAuthentication';
+import { API, Auth } from 'aws-amplify';
+import { Lucide, Modal, ModalBody } from '@/base-components';
+import { useLottie } from 'lottie-react';
+import loadingAnimation from '../lottie/loading.json';
+import Lottie from 'lottie-react';
 
 function Register() {
 	const { signIn, signUp, confirmSignUp } = useAuthentication();
+	const [showNotificationModal, setShowNotificationModal] = React.useState(false);
 	const [showPassword, setShowPassword] = React.useState(false);
+	const [modalText, setModalText] = React.useState('');
+	const [modalState, setModalState] = React.useState('success');
+	const navigate = useNavigate();
+	const options = {
+		animationData: loadingAnimation,
+		loop: true,
+	};
+
 	const {
 		register,
 		handleSubmit,
@@ -33,28 +47,19 @@ function Register() {
 				},
 			});
 			if (result && result.userSub) {
-				// {
-				// 	userSub: 'string',
-				// 	userConfirmed: true,
-				// 	user: {
-				// 		authenticationFlowType: 'string',
-				// 		username: 'string',
-				// 	},
-				// 	codeDeliveryDetails: {
-				// 		AttributeName: 'string',
-				// 		DeliveryMedium: 'string',
-				// 		Destination: 'string',
-				// 	},
-				// }
-
-				//redirect to confirm page
-
 				//call api to create user in dynamodb
-
-				console.log('res', result);
+				navigate('/register-confirm', { state: { email: data.email } });
+				await API.post('s3cUserAPI', '/users/register', {
+					body: {
+						id: result.userSub,
+						email: data.email,
+					},
+				});
 			}
 		} catch (error) {
-			console.log('error registering', error);
+			setModalState('error');
+			setModalText(error.message);
+			setShowNotificationModal(true);
 		}
 	};
 
@@ -63,6 +68,46 @@ function Register() {
 			<div>
 				<DarkModeSwitcher />
 				<div className='container sm:px-10'>
+					<Modal
+						show={showNotificationModal}
+						onHidden={() => {
+							setShowNotificationModal(false);
+						}}
+						className='flex flex-col justify-center'
+					>
+						<a
+							onClick={() => {
+								setShowNotificationModal(false);
+							}}
+							className='absolute right-0 top-0 mt-3 mr-3'
+							href='#'
+						>
+							<Lucide icon='X' className='w-8 h-8 text-slate-400' />
+						</a>
+						<ModalBody className='p-0'>
+							<div className='p-5 text-center'>
+								{modalState === 'success' && (
+									<Lucide icon='Check' className='w-12 h-12 text-green-400 mx-auto mt-3' />
+								)}
+								{modalState === 'error' && (
+									<Lucide icon='Slash' className='w-12 h-12 text-red-400 mx-auto mt-3' />
+								)}
+								{/* <Lucide icon='Slash' className='w-12 h-12 text-red-400 mx-auto mt-3' /> */}
+								<div className='text-slate-500 text-lg mt-2'>{modalText}</div>
+							</div>
+							<div className='px-5 pb-8 text-center'>
+								<button
+									type='button'
+									onClick={() => {
+										setShowNotificationModal(false);
+									}}
+									className='btn btn-primary w-24'
+								>
+									Ok
+								</button>
+							</div>
+						</ModalBody>
+					</Modal>
 					<div className='block xl:grid grid-cols-2 gap-4'>
 						{/* BEGIN: Register Info */}
 						<div className='hidden xl:flex flex-col min-h-screen'>
@@ -139,6 +184,7 @@ function Register() {
 											className='btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top'
 										>
 											Sign Up
+											{/* <Lottie animationData={loadingAnimation} loop={true} /> */}
 										</button>
 										<Link
 											to='/login'

@@ -82,6 +82,7 @@ import RegisterConfirm from '../views/register-confirm/RegisterConfirm';
 import { RequireAuthentication } from '../components/wrappers/RequireAuthentication';
 import ForgotPassword from '../views/forgot-password/ForgotPassword';
 import ForgotPasswordConfirm from '../views/forgot-password/ForgotPasswordConfirm';
+import Settings from '../views/settings/Settings';
 
 function Router() {
 	const routes = [
@@ -208,8 +209,8 @@ function Router() {
 					element: <CrudDataList />,
 				},
 				{
-					path: 'crud-form',
-					element: <CrudForm />,
+					path: 'settings',
+					element: <Settings />,
 				},
 				{
 					path: 'users-layout-1',

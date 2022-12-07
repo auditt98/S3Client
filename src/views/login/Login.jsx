@@ -54,6 +54,7 @@ function Login() {
 			let res = await signIn({ email: data.email, password: data.password });
 			if (res && res.username) {
 				navigate('/dashboard');
+				console.log('res', res);
 			}
 		} catch (e) {
 			let errorCode = e['code'];

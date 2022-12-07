@@ -21,13 +21,13 @@
         }
       }
     },
-    "s3cAPI": {
+    "s3cUserAPI": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "s3cRegisterUserFunc",
+          "resourceName": "s3cUserFunc",
           "attributes": [
             "Name",
             "Arn"
@@ -44,6 +44,30 @@
   },
   "function": {
     "s3cRegisterUserFunc": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "s3clientdynamo",
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "attributeEnvMap": {
+            "Name": "TABLE_NAME",
+            "Arn": "TABLE_ARN"
+          }
+        }
+      ]
+    },
+    "addUserFunc": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "s3cUserFunc": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
