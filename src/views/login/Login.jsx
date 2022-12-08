@@ -43,7 +43,7 @@ function Login() {
 		watch,
 	} = useForm();
 
-	const { signIn } = useAuthentication();
+	const { signIn, syncCurrentUser } = useAuthentication();
 
 	useEffect(() => {
 		dom('body').removeClass('main').removeClass('error-page').addClass('login');
@@ -54,7 +54,8 @@ function Login() {
 			let res = await signIn({ email: data.email, password: data.password });
 			if (res && res.username) {
 				navigate('/dashboard');
-				console.log('res', res);
+				let currentUser = await syncCurrentUser();
+				console.log('currentUser', currentUser);
 			}
 		} catch (e) {
 			let errorCode = e['code'];

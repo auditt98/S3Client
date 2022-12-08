@@ -10,6 +10,7 @@ const AWS = require('aws-sdk');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const bodyParser = require('body-parser');
 const express = require('express');
+var jwt = require('jsonwebtoken');
 
 AWS.config.update({ region: process.env.TABLE_REGION });
 
@@ -42,6 +43,19 @@ app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Headers', '*');
 	next();
 });
+
+const getCircularReplacer = () => {
+	const seen = new WeakSet();
+	return (key, value) => {
+		if (typeof value === 'object' && value !== null) {
+			if (seen.has(value)) {
+				return;
+			}
+			seen.add(value);
+		}
+		return value;
+	};
+};
 
 // convert url string param to expected Type
 const convertUrlType = (param, type) => {
@@ -91,6 +105,89 @@ app.get(path + hashKeyPath, function (req, res) {
 			res.json(data.Items);
 		}
 	});
+});
+
+app.get(path + hashKeyPath + sortKeyPath, (req, res) => {
+	let result = {};
+	let queryParams = {
+		TableName: tableName,
+		Key: {
+			id: req.params.id,
+			email: req.params.email,
+		},
+	};
+	dynamodb.get(queryParams, (error, d) => {
+		if (error) {
+			result = {
+				result: 'error',
+				error: error,
+				data: null,
+			};
+			res.statusCode = 500;
+		} else {
+			result = {
+				result: 'success',
+				error: null,
+				data: d,
+			};
+			res.statusCode = 200;
+		}
+		res.send(result);
+	});
+});
+
+/*****************************************
+ * HTTP POST method to update an user *
+ *****************************************/
+app.post(path + hashKeyPath + sortKeyPath, (req, res) => {
+	//validate if the request body has accessKeyId and secretAccessKey
+	if (!req.body.accessKeyId || !req.body.secretAccessKey) {
+		res.statusCode = 400;
+		res.send({
+			result: 'error',
+			code: 'UpdateMissingArgs',
+			message: 'Missing AccessKeyId or SecretAccessKey',
+		});
+	}
+	//put item in dynamo
+	let queryParams = {
+		TableName: tableName,
+		Item: {
+			id: req.params.id,
+			email: req.params.email,
+			accessKeyId: req.body.accessKeyId,
+			secretAccessKey: req.body.secretAccessKey,
+		},
+		Expected: {
+			id: {
+				Value: req.params.id,
+				ComparisonOperator: 'EQ',
+			},
+		},
+	};
+	dynamodb.put(queryParams, (error, data) => {
+		if (error) {
+			res.statusCode = 500;
+			res.send({
+				result: 'error',
+				code: 'UpdateUserFailed',
+				message: 'Failed to update user',
+				error: error,
+			});
+		} else {
+			res.statusCode = 200;
+			res.send({
+				result: 'success',
+				data: data,
+			});
+		}
+	});
+});
+
+app.get(path + hashKeyPath, (req, res) => {
+	let json = JSON.stringify(req, getCircularReplacer());
+	res.statusCode = 200;
+	res.send(json);
 });
 
 /*****************************************

@@ -15,6 +15,8 @@
 	},
 	"dependencies": {
 		"@aws-amplify/ui-react": "4.0.1",
+		"@aws-sdk/client-ec2": "^3.226.0",
+		"@aws-sdk/client-s3": "^3.226.0",
 		"@ckeditor/ckeditor5-build-balloon": "^29.1.0",
 		"@ckeditor/ckeditor5-build-balloon-block": "^29.1.0",
 		"@ckeditor/ckeditor5-build-classic": "^29.1.0",
@@ -47,6 +49,7 @@
 		"i18next-browser-languagedetector": "^6.1.8",
 		"i18next-http-backend": "^1.4.4",
 		"js-beautify": "^1.13.5",
+		"jsonwebtoken": "^8.5.1",
 		"litepicker": "^2.0.11",
 		"lottie-react": "^2.3.1",
 		"lucide": "^0.17.2",

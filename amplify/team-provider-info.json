@@ -30,7 +30,7 @@
         },
         "s3cUserFunc": {
           "deploymentBucketName": "amplify-s3client-staging-142516-deployment",
-          "s3Key": "amplify-builds/s3cUserFunc-546263576b3568707459-build.zip"
+          "s3Key": "amplify-builds/s3cUserFunc-766e735042464f2b6459-build.zip"
         }
       },
       "auth": {

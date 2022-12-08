@@ -49,7 +49,7 @@ function Register() {
 			if (result && result.userSub) {
 				//call api to create user in dynamodb
 				navigate('/register-confirm', { state: { email: data.email } });
-				await API.post('s3cUserAPI', '/users/register', {
+				API.post('s3cUserAPI', '/users/register', {
 					body: {
 						id: result.userSub,
 						email: data.email,

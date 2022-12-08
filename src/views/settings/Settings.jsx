@@ -1,9 +1,16 @@
 import { ClassicEditor, TomSelect } from '@/base-components';
+import { API } from 'aws-amplify';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import { useS3 } from '../../hooks/storage/useS3';
+import { currentUserState } from '../../stores/user-store';
 
 function Settings() {
 	const form = useForm();
+	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+	const [showPassword, setShowPassword] = useState(false);
+	const { getCallerIdentity } = useS3();
 	const {
 		register,
 		handleSubmit,
@@ -12,8 +19,22 @@ function Settings() {
 		formState: { errors },
 	} = form;
 
-	const onSubmit = (data) => {
-		console.log('data', data);
+	const onSubmit = async (data) => {
+		let { accessKeyId, secretAccessKey } = data;
+		try {
+			console.log('currentUser', currentUser);
+			let result = await API.post('s3cUserAPI', `/users/${currentUser.id}/${currentUser.email}`, {
+				body: {
+					accessKeyId,
+					secretAccessKey,
+				},
+			});
+			if (result && result.result === 'success') {
+				setCurrentUser({ ...currentUser, accessKeyId, secretAccessKey });
+			}
+		} catch (error) {
+			console.log('error', error);
+		}
 	};
 
 	return (
@@ -33,6 +54,7 @@ function Settings() {
 								<input
 									{...register('accessKeyId', { required: true })}
 									type='text'
+									defaultValue={currentUser.accessKeyId || ''}
 									id='accessKeyId'
 									className={`intro-x login__input form-control py-3 px-4 block relative pr-16`}
 									placeholder='AccessKeyID'
@@ -42,17 +64,49 @@ function Settings() {
 								<label htmlFor='secretAccessKey' className='form-label'>
 									SecretAccessKey
 								</label>
-								<input
-									{...register('secretAccessKey', { required: true })}
-									type='text'
-									id='secretAccessKey'
-									className={`intro-x login__input form-control py-3 px-4 block relative pr-16`}
-									placeholder='SecretAccessKey'
-								/>
+								<div className='h-fit relative'>
+									<input
+										{...register('secretAccessKey', { required: true })}
+										defaultValue={currentUser.secretAccessKey || ''}
+										type={showPassword ? 'text' : 'password'}
+										id='secretAccessKey'
+										className={`intro-x login__input form-control py-3 px-4 block relative pr-16`}
+										placeholder='SecretAccessKey'
+									/>
+									<div className='absolute flex flex-col justify-center top-0 right-2 rounded-full z-50 h-full'>
+										{showPassword && (
+											<div
+												className='w-12 h-8 text-center bg-primary text-white flex flex-col justify-center rounded-lg cursor-pointer border-solid border-2 border-primary'
+												onClick={() => {
+													setShowPassword(false);
+												}}
+											>
+												Hide
+											</div>
+										)}
+										{!showPassword && (
+											<div
+												className='w-12 h-8 text-center bg-neutral-100 text-gray-500 flex flex-col justify-center rounded-lg cursor-pointer  border-solid border-2 border-gray-200'
+												onClick={() => {
+													setShowPassword(true);
+												}}
+											>
+												Show
+											</div>
+										)}
+									</div>
+								</div>
 							</div>
 							<div className='text-right mt-5'>
 								<button type='submit' className='btn btn-primary w-24'>
 									Save
+								</button>
+								<button
+									onClick={() => {
+										getCallerIdentity();
+									}}
+								>
+									Test S3
 								</button>
 							</div>
 						</div>
