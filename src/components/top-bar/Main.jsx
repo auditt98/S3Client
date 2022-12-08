@@ -21,7 +21,7 @@ import { currentRegionList } from '../../stores/user-store';
 function Main(props) {
 	const { signOut } = useAuthentication();
 	const [searchDropdown, setSearchDropdown] = useState(false);
-	const [select, setSelect] = useState('1');
+	const [select, setSelect] = useState('ap-southeast-1');
 	const [currentRegions, setCurrentRegions] = useRecoilState(currentRegionList);
 	const showSearchDropdown = () => {
 		setSearchDropdown(true);

@@ -9,7 +9,7 @@ import { currentUserState, currentRegionList } from '../../stores/user-store';
 export const useS3 = () => {
 	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 	const [currentRegions, setCurrentRegions] = useRecoilState(currentRegionList);
-	const getCallerIdentity = async () => {
+	const getRegions = async () => {
 		let ec2Client = new EC2Client({
 			region: 'ap-southeast-1',
 			credentials: {
@@ -25,22 +25,6 @@ export const useS3 = () => {
 		} catch (e) {
 			console.log(e);
 		}
-
-		//create new aws credentials object
-		// let stsClient = new STSClient({
-		// 	credentials: {
-		// 		accessKeyId: currentUser.accessKeyId,
-		// 		secretAccessKey: currentUser.secretAccessKey,
-		// 	},
-		// 	region: 'ap-southeast-1',
-		// });
-		// let command = new GetCallerIdentityCommand({});
-		// try {
-		// 	let response = await stsClient.send(command);
-		// 	console.log('response', response);
-		// } catch (e) {
-		// 	console.log(e);
-		// }
 	};
-	return { getCallerIdentity };
+	return { getRegions };
 };

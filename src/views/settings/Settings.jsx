@@ -10,7 +10,7 @@ function Settings() {
 	const form = useForm();
 	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 	const [showPassword, setShowPassword] = useState(false);
-	const { getCallerIdentity } = useS3();
+	const { getRegions } = useS3();
 	const {
 		register,
 		handleSubmit,
@@ -31,6 +31,7 @@ function Settings() {
 			});
 			if (result && result.result === 'success') {
 				setCurrentUser({ ...currentUser, accessKeyId, secretAccessKey });
+				// let regions = await getRegions();
 			}
 		} catch (error) {
 			console.log('error', error);

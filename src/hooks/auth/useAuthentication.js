@@ -3,11 +3,14 @@ import { API, Auth } from 'aws-amplify';
 import awsConfig from '../../aws-exports';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { currentUserState } from '../../stores/user-store';
+import { currentRegionList, currentUserState } from '../../stores/user-store';
+import { useS3 } from '../storage/useS3';
 
 export const useAuthentication = () => {
 	const navigate = useNavigate();
+	const [currentRegions, setCurrentRegions] = useRecoilState(currentRegionList);
 	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+	const { getRegions } = useS3();
 	const signIn = async ({ email, password, ...params } = params) => {
 		return await Auth.signIn(email, password);
 	};
@@ -56,23 +59,26 @@ export const useAuthentication = () => {
 				email: authenticatedUser.attributes.email,
 				username: authenticatedUser.username,
 			};
-			let userDB = await API.get(
-				awsConfig.aws_cloud_logic_custom[0].name,
-				`/users/${transformedUser.username}/${transformedUser.email}`,
-				{
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `${authenticatedUser.signInUserSession.idToken.jwtToken}`,
-					},
-				}
-			);
-			console.log('userDB', userDB);
 			let synchedUser = { ...transformedUser };
-			if (userDB && userDB.data && userDB.data.Item) {
-				let userData = userDB.data.Item;
-				synchedUser = { ...transformedUser, ...userData };
+			if (!currentUser.accessKeyId || !currentUser.secretAccessKey) {
+				let userDB = await API.get(
+					awsConfig.aws_cloud_logic_custom[0].name,
+					`/users/${transformedUser.username}/${transformedUser.email}`,
+					{
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `${authenticatedUser.signInUserSession.idToken.jwtToken}`,
+						},
+					}
+				);
+				if (userDB && userDB.data && userDB.data.Item) {
+					let userData = userDB.data.Item;
+					synchedUser = { ...transformedUser, ...userData };
+				}
 			}
-			console.log('synchedUser', synchedUser);
+			if (currentRegions.length === 0) {
+				getRegions();
+			}
 			setCurrentUser(synchedUser);
 		} catch (e) {
 			console.log(Object.entries(e));
