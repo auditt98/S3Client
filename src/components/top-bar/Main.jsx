@@ -17,17 +17,26 @@ import { useAuthentication } from '../../hooks/auth/useAuthentication';
 import { TomSelect } from '@/base-components';
 import { useRecoilState } from 'recoil';
 import { currentRegionList } from '../../stores/user-store';
+import { useAPI } from '../../hooks/api/useAPI';
 
 function Main(props) {
 	const { signOut } = useAuthentication();
+	const { updateUser } = useAPI();
 	const [searchDropdown, setSearchDropdown] = useState(false);
-	const [select, setSelect] = useState('ap-southeast-1');
 	const [currentRegions, setCurrentRegions] = useRecoilState(currentRegionList);
 	const showSearchDropdown = () => {
 		setSearchDropdown(true);
 	};
 	const hideSearchDropdown = () => {
 		setSearchDropdown(false);
+	};
+
+	const onChangeDefaultRegion = async (region) => {
+		try {
+			let res = await updateUser({ defaultRegion: region });
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	return (
@@ -46,27 +55,30 @@ function Main(props) {
 					</ol>
 				</nav>
 				{/* END: Breadcrumb */}
-				<TomSelect
-					value={select}
-					onChange={setSelect}
-					options={{
-						placeholder: 'Select Regions',
-					}}
-					className='w-60'
-				>
-					{currentRegions.map((region) => {
-						return (
-							<option key={region} value={region}>
-								{region}
-							</option>
-						);
-					})}
-					{/* <option value='1'>Leonardo DiCaprio</option>
-					<option value='2'>Johnny Deep</option>
-					<option value='3'>Robert Downey, Jr</option>
-					<option value='4'>Samuel L. Jackson</option>
-					<option value='5'>Morgan Freeman</option> */}
-				</TomSelect>
+				<Dropdown className='intro-x mr-auto sm:mr-6'>
+					<DropdownToggle tag='div' role='button' className='cursor-pointer'>
+						<div>
+							ap-southeast-1 <Lucide className='inline w-4 h-4' icon='ArrowDownRight'></Lucide>
+						</div>
+					</DropdownToggle>
+					<DropdownMenu className='notification-content pt-2'>
+						<DropdownContent tag='div' className='notification-content__box  max-h-96 !p-0 overflow-auto'>
+							{currentRegions.map((region) => {
+								return (
+									<div
+										key={region}
+										className={classnames('w-full p-2 hover:bg-gray-50 cursor-pointer')}
+										onClick={() => {
+											onChangeDefaultRegion(region);
+										}}
+									>
+										{region}
+									</div>
+								);
+							})}
+						</DropdownContent>
+					</DropdownMenu>
+				</Dropdown>
 				{/* BEGIN: Search */}
 				<div className='intro-x relative mr-3 sm:mr-6'>
 					<div className='search hidden sm:block'>

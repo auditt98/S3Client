@@ -9,12 +9,14 @@ import { currentUserState, currentRegionList } from '../../stores/user-store';
 export const useS3 = () => {
 	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 	const [currentRegions, setCurrentRegions] = useRecoilState(currentRegionList);
-	const getRegions = async () => {
+	const getRegions = async (accessKeyId, secretAccessKey) => {
+		if (currentRegions.length > 0) return;
+		console.log('getRegions', currentUser);
 		let ec2Client = new EC2Client({
 			region: 'ap-southeast-1',
 			credentials: {
-				accessKeyId: currentUser.accessKeyId,
-				secretAccessKey: currentUser.secretAccessKey,
+				accessKeyId: accessKeyId || currentUser.accessKeyId,
+				secretAccessKey: secretAccessKey || currentUser.secretAccessKey,
 			},
 		});
 		let command = new DescribeRegionsCommand({});

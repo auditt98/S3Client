@@ -10,6 +10,7 @@ function Settings() {
 	const form = useForm();
 	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 	const [showPassword, setShowPassword] = useState(false);
+	const [passwordReadonly, setPasswordReadonly] = useState(true);
 	const { getRegions } = useS3();
 	const {
 		register,
@@ -55,9 +56,10 @@ function Settings() {
 								<input
 									{...register('accessKeyId', { required: true })}
 									type='text'
-									defaultValue={currentUser.accessKeyId || ''}
+									defaultValue={currentUser.accessKeyId}
 									id='accessKeyId'
-									className={`intro-x login__input form-control py-3 px-4 block relative pr-16`}
+									autoComplete='do-not-autocomplete'
+									className={`intro-x login__input form-control py-3 px-4 block relative pr-16 cursor-text`}
 									placeholder='AccessKeyID'
 								/>
 							</div>
@@ -68,10 +70,15 @@ function Settings() {
 								<div className='h-fit relative'>
 									<input
 										{...register('secretAccessKey', { required: true })}
-										defaultValue={currentUser.secretAccessKey || ''}
+										defaultValue={currentUser.secretAccessKey}
+										readOnly={passwordReadonly}
+										onFocus={() => {
+											setPasswordReadonly(false);
+										}}
 										type={showPassword ? 'text' : 'password'}
+										autoComplete='do-not-autocomplete'
 										id='secretAccessKey'
-										className={`intro-x login__input form-control py-3 px-4 block relative pr-16`}
+										className={`intro-x login__input form-control py-3 px-4 block relative pr-16 cursor-text`}
 										placeholder='SecretAccessKey'
 									/>
 									<div className='absolute flex flex-col justify-center top-0 right-2 rounded-full z-50 h-full'>
@@ -101,13 +108,6 @@ function Settings() {
 							<div className='text-right mt-5'>
 								<button type='submit' className='btn btn-primary w-24'>
 									Save
-								</button>
-								<button
-									onClick={() => {
-										getCallerIdentity();
-									}}
-								>
-									Test S3
 								</button>
 							</div>
 						</div>

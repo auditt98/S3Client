@@ -10,41 +10,42 @@ const sideMenu = atom({
 				pathname: '/dashboard',
 			},
 			{
-				icon: 'File',
-				title: 'Storage',
-				subMenu: [
-					{
-						icon: '',
-						pathname: '/',
-						title: 'Overview 1',
-					},
-					{
-						icon: '',
-						pathname: '/dashboard-overview-2',
-						title: 'Overview 2',
-					},
-					{
-						icon: '',
-						pathname: '/dashboard-overview-3',
-						title: 'Overview 3',
-					},
-					{
-						icon: '',
-						pathname: '/dashboard-overview-4',
-						title: 'Overview 4',
-					},
-				],
+				icon: 'HardDrive',
+				pathname: '/file-manager',
+				title: 'File Manager',
 			},
+			// {
+			// 	icon: 'File',
+			// 	title: 'Storage',
+			// 	subMenu: [
+			// 		{
+			// 			icon: '',
+			// 			pathname: '/',
+			// 			title: 'Overview 1',
+			// 		},
+			// 		{
+			// 			icon: '',
+			// 			pathname: '/dashboard-overview-2',
+			// 			title: 'Overview 2',
+			// 		},
+			// 		{
+			// 			icon: '',
+			// 			pathname: '/dashboard-overview-3',
+			// 			title: 'Overview 3',
+			// 		},
+			// 		{
+			// 			icon: '',
+			// 			pathname: '/dashboard-overview-4',
+			// 			title: 'Overview 4',
+			// 		},
+			// 	],
+			// },
 			{
 				icon: 'Edit',
 				title: 'Settings',
 				pathname: '/settings',
 			},
-			{
-				icon: 'HardDrive',
-				pathname: '/file-manager',
-				title: 'File Manager',
-			},
+
 			{
 				icon: 'CreditCard',
 				pathname: '/point-of-sale',
