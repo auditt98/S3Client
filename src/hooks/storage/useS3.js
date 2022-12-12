@@ -1,4 +1,4 @@
-import { S3Client, AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
+import { S3Client, AbortMultipartUploadCommand, ListBucketsCommand } from '@aws-sdk/client-s3';
 
 import { EC2Client, DescribeRegionsCommand } from '@aws-sdk/client-ec2';
 
@@ -28,5 +28,24 @@ export const useS3 = () => {
 			console.log(e);
 		}
 	};
-	return { getRegions };
+
+	const getBuckets = async (accessKeyId, secretAccessKey) => {
+		let s3Client = new S3Client({
+			region: 'ap-southeast-1',
+			credentials: {
+				accessKeyId: accessKeyId || currentUser.accessKeyId,
+				secretAccessKey: secretAccessKey || currentUser.secretAccessKey,
+			},
+		});
+		console.log('accessKeyId || currentUser.accessKeyId,', accessKeyId || currentUser.accessKeyId);
+		let command = new ListBucketsCommand({});
+		try {
+			let response = await s3Client.send(command);
+			console.log(response);
+		} catch (e) {
+			console.log(e);
+			console.log('currentuser', currentUser);
+		}
+	};
+	return { getRegions, getBuckets };
 };

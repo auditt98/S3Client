@@ -16,12 +16,13 @@ import React from 'react';
 import { useAuthentication } from '../../hooks/auth/useAuthentication';
 import { TomSelect } from '@/base-components';
 import { useRecoilState } from 'recoil';
-import { currentRegionList } from '../../stores/user-store';
+import { currentRegionList, currentUserState } from '../../stores/user-store';
 import { useAPI } from '../../hooks/api/useAPI';
 
 function Main(props) {
 	const { signOut } = useAuthentication();
 	const { updateUser } = useAPI();
+	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 	const [searchDropdown, setSearchDropdown] = useState(false);
 	const [currentRegions, setCurrentRegions] = useRecoilState(currentRegionList);
 	const showSearchDropdown = () => {
@@ -219,23 +220,14 @@ function Main(props) {
 					<DropdownMenu className='w-56'>
 						<DropdownContent className='bg-primary text-white'>
 							<DropdownHeader tag='div' className='!font-normal'>
-								<div className='font-medium'>{$f()[0].users[0].name}</div>
-								<div className='text-xs text-white/70 mt-0.5 dark:text-slate-500'>
-									{$f()[0].jobs[0]}
-								</div>
+								<div className='font-medium'>{currentUser.email}</div>
 							</DropdownHeader>
 							<DropdownDivider className='border-white/[0.08]' />
 							<DropdownItem className='hover:bg-white/5'>
-								<Lucide icon='User' className='w-4 h-4 mr-2' /> Profile
+								<Lucide icon='User' className='w-4 h-4 mr-2' /> Settings
 							</DropdownItem>
 							<DropdownItem className='hover:bg-white/5'>
-								<Lucide icon='Edit' className='w-4 h-4 mr-2' /> Add Account
-							</DropdownItem>
-							<DropdownItem className='hover:bg-white/5'>
-								<Lucide icon='Lock' className='w-4 h-4 mr-2' /> Reset Password
-							</DropdownItem>
-							<DropdownItem className='hover:bg-white/5'>
-								<Lucide icon='HelpCircle' className='w-4 h-4 mr-2' /> Help
+								<Lucide icon='Lock' className='w-4 h-4 mr-2' /> Change Password
 							</DropdownItem>
 							<DropdownDivider className='border-white/[0.08]' />
 							<DropdownItem className='hover:bg-white/5' onClick={() => signOut()}>

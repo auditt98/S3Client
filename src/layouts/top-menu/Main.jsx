@@ -4,7 +4,7 @@ import { helper as $h } from '@/utils';
 import { topMenu as useTopMenuStore } from '@/stores/top-menu';
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { linkTo, nestedMenu } from '@/layouts/side-menu';
 import {
 	Lucide,
@@ -23,10 +23,12 @@ import MainColorSwitcher from '@/components/main-color-switcher/Main';
 import DarkModeSwitcher from '@/components/dark-mode-switcher/Main';
 import { useSignOut } from 'react-auth-kit';
 import { useAuthentication } from '@/hooks/auth/useAuthentication';
+import { currentUserState } from '../../stores/user-store';
 // import { useIsAuthenticated } from 'react-auth-kit';
 
 function Main() {
 	const [searchDropdown, setSearchDropdown] = useState(false);
+	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 	const { signOut } = useAuthentication();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -212,23 +214,14 @@ function Main() {
 						<DropdownMenu className='w-56'>
 							<DropdownContent className='bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white'>
 								<DropdownHeader tag='div' className='!font-normal'>
-									<div className='font-medium'>{$f()[0].users[0].name}</div>
-									<div className='text-xs text-white/70 mt-0.5 dark:text-slate-500'>
-										{$f()[0].jobs[0]}
-									</div>
+									<div className='font-medium'>{currentUser.email}</div>
 								</DropdownHeader>
 								<DropdownDivider className='border-white/[0.08]' />
 								<DropdownItem className='hover:bg-white/5'>
-									<Lucide icon='User' className='w-4 h-4 mr-2' /> Profile
+									<Lucide icon='User' className='w-4 h-4 mr-2' /> Settings
 								</DropdownItem>
 								<DropdownItem className='hover:bg-white/5'>
-									<Lucide icon='Edit' className='w-4 h-4 mr-2' /> Add Account
-								</DropdownItem>
-								<DropdownItem className='hover:bg-white/5'>
-									<Lucide icon='Lock' className='w-4 h-4 mr-2' /> Reset Password
-								</DropdownItem>
-								<DropdownItem className='hover:bg-white/5'>
-									<Lucide icon='HelpCircle' className='w-4 h-4 mr-2' /> Help
+									<Lucide icon='Lock' className='w-4 h-4 mr-2' /> Change Password
 								</DropdownItem>
 								<DropdownDivider className='border-white/[0.08]' />
 								<DropdownItem className='hover:bg-white/5' onClick={() => signOut()}>

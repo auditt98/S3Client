@@ -75,9 +75,11 @@ export const useAuthentication = () => {
 					let userData = userDB.data.Item;
 					synchedUser = { ...transformedUser, ...userData };
 					getRegions(synchedUser.accessKeyId, synchedUser.secretAccessKey);
+					setCurrentUser(synchedUser);
+					return;
 				}
 			}
-			setCurrentUser(synchedUser);
+			setCurrentUser(transformedUser);
 		} catch (e) {
 			console.log(Object.entries(e));
 		}

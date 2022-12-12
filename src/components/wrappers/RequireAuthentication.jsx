@@ -25,6 +25,9 @@ export function RequireAuthentication({ children }) {
 				} else {
 					setIsAuthenticated(true);
 					syncCurrentUser();
+					if (!currentUser.accessKeyId || !currentUser.secretAccessKey) {
+						// navigate('/settings');
+					}
 				}
 			} catch (error) {
 				setIsAuthenticated(false);

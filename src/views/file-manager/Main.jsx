@@ -1,65 +1,21 @@
 import { Lucide, Dropdown, DropdownToggle, DropdownMenu, DropdownContent, DropdownItem } from '@/base-components';
 import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useS3 } from '../../hooks/storage/useS3';
 
 function Main() {
+	const { getRegions, getBuckets } = useS3();
+	const location = useLocation();
+	useEffect(() => {
+		getBuckets();
+	}, location.pathname);
+
 	return (
 		<>
 			<div className='grid grid-cols-12 gap-6 mt-8'>
-				<div className='col-span-12 lg:col-span-3 2xl:col-span-2'>
-					<h2 className='intro-y text-lg font-medium mr-auto mt-2'>File Manager</h2>
-					{/* BEGIN: File Manager Menu */}
-					<div className='intro-y box p-5 mt-6'>
-						<div className='mt-1'>
-							<a
-								href=''
-								className='flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium'
-							>
-								<Lucide icon='Image' className='w-4 h-4 mr-2' /> Images
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<Lucide icon='Video' className='w-4 h-4 mr-2' /> Videos
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<Lucide icon='File' className='w-4 h-4 mr-2' /> Documents
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<Lucide icon='Users' className='w-4 h-4 mr-2' /> Shared
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<Lucide icon='Trash' className='w-4 h-4 mr-2' /> Trash
-							</a>
-						</div>
-						<div className='border-t border-slate-200 dark:border-darkmode-400 mt-4 pt-4'>
-							<a href='' className='flex items-center px-3 py-2 rounded-md'>
-								<div className='w-2 h-2 bg-pending rounded-full mr-3'></div>
-								Custom Work
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<div className='w-2 h-2 bg-success rounded-full mr-3'></div>
-								Important Meetings
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<div className='w-2 h-2 bg-warning rounded-full mr-3'></div>
-								Work
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<div className='w-2 h-2 bg-pending rounded-full mr-3'></div>
-								Design
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<div className='w-2 h-2 bg-danger rounded-full mr-3'></div>
-								Next Week
-							</a>
-							<a href='' className='flex items-center px-3 py-2 mt-2 rounded-md'>
-								<Lucide icon='Plus' className='w-4 h-4 mr-2' /> Add New Label
-							</a>
-						</div>
-					</div>
-					{/* END: File Manager Menu */}
-				</div>
-				<div className='col-span-12 lg:col-span-9 2xl:col-span-10'>
+				<div className='col-span-12 lg:col-span-12 2xl:col-span-12'>
 					{/* BEGIN: File Manager Filter */}
 					<div className='intro-y flex flex-col-reverse sm:flex-row items-center'>
 						<div className='w-full sm:w-auto relative mr-auto mt-3 sm:mt-0'>
@@ -161,7 +117,7 @@ function Main() {
 					{/* END: File Manager Filter */}
 					{/* BEGIN: Directory & Files */}
 					<div className='intro-y grid grid-cols-12 gap-3 sm:gap-6 mt-5'>
-						{$f().map((faker, fakerKey) => (
+						{/* {$f().map((faker, fakerKey) => (
 							<div
 								key={fakerKey}
 								className='intro-y col-span-6 sm:col-span-4 md:col-span-3 2xl:col-span-2'
@@ -235,11 +191,11 @@ function Main() {
 									</Dropdown>
 								</div>
 							</div>
-						))}
+						))} */}
 					</div>
 					{/* END: Directory & Files */}
 					{/* BEGIN: Pagination */}
-					<div className='intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-6'>
+					{/* <div className='intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-6'>
 						<nav className='w-full sm:w-auto sm:mr-auto'>
 							<ul className='pagination'>
 								<li className='page-item'>
@@ -295,7 +251,7 @@ function Main() {
 							<option>35</option>
 							<option>50</option>
 						</select>
-					</div>
+					</div> */}
 					{/* END: Pagination */}
 				</div>
 			</div>

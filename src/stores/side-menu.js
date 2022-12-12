@@ -5,15 +5,21 @@ const sideMenu = atom({
 	default: {
 		menu: [
 			{
-				title: 'Dashboard',
-				icon: 'Home',
-				pathname: '/dashboard',
-			},
-			{
 				icon: 'HardDrive',
 				pathname: '/file-manager',
 				title: 'File Manager',
 			},
+			{
+				icon: 'Edit',
+				title: 'Settings',
+				pathname: '/settings',
+			},
+			{
+				title: 'Dashboard',
+				icon: 'Home',
+				pathname: '/dashboard',
+			},
+
 			// {
 			// 	icon: 'File',
 			// 	title: 'Storage',
@@ -40,11 +46,6 @@ const sideMenu = atom({
 			// 		},
 			// 	],
 			// },
-			{
-				icon: 'Edit',
-				title: 'Settings',
-				pathname: '/settings',
-			},
 
 			{
 				icon: 'CreditCard',
