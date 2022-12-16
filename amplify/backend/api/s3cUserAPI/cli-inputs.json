@@ -1,8 +1,8 @@
 {
   "version": 1,
   "paths": {
-    "/users": {
-      "name": "/users",
+    "/user": {
+      "name": "/user",
       "lambdaFunction": "s3cUserFunc",
       "permissions": {
         "setting": "open"

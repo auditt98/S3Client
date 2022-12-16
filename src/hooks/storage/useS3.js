@@ -5,6 +5,8 @@ import { EC2Client, DescribeRegionsCommand } from '@aws-sdk/client-ec2';
 import { STSClient, GetCallerIdentityCommand } from '@aws-sdk/client-sts';
 import { useRecoilState } from 'recoil';
 import { currentUserState, currentRegionList } from '../../stores/user-store';
+import { API } from 'aws-amplify';
+import awsConfig from '@/aws-exports';
 
 export const useS3 = () => {
 	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
@@ -30,22 +32,29 @@ export const useS3 = () => {
 	};
 
 	const getBuckets = async (accessKeyId, secretAccessKey) => {
-		let s3Client = new S3Client({
-			region: 'ap-southeast-1',
-			credentials: {
+		const result = API.post(awsConfig.aws_cloud_logic_custom[0].name, '/test', {
+			body: {
 				accessKeyId: accessKeyId || currentUser.accessKeyId,
 				secretAccessKey: secretAccessKey || currentUser.secretAccessKey,
 			},
 		});
-		console.log('accessKeyId || currentUser.accessKeyId,', accessKeyId || currentUser.accessKeyId);
-		let command = new ListBucketsCommand({});
-		try {
-			let response = await s3Client.send(command);
-			console.log(response);
-		} catch (e) {
-			console.log(e);
-			console.log('currentuser', currentUser);
-		}
+		console.log('result', result);
+		// let s3Client = new S3Client({
+		// 	region: 'ap-southeast-1',
+		// 	credentials: {
+		// 		accessKeyId: accessKeyId || currentUser.accessKeyId,
+		// 		secretAccessKey: secretAccessKey || currentUser.secretAccessKey,
+		// 	},
+		// });
+		// console.log('accessKeyId || currentUser.accessKeyId,', accessKeyId || currentUser.accessKeyId);
+		// let command = new ListBucketsCommand({});
+		// try {
+		// 	let response = await s3Client.send(command);
+		// 	console.log(response);
+		// } catch (e) {
+		// 	console.log(e);
+		// 	console.log('currentuser', currentUser);
+		// }
 	};
 	return { getRegions, getBuckets };
 };

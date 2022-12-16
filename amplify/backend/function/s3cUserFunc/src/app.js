@@ -27,7 +27,7 @@ const partitionKeyType = 'S';
 const sortKeyName = 'email';
 const sortKeyType = 'S';
 const hasSortKey = sortKeyName !== '';
-const path = '/users';
+const path = '/user';
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
@@ -66,6 +66,26 @@ const convertUrlType = (param, type) => {
 			return param;
 	}
 };
+
+app.post(path + '/get-buckets', async (req, res) => {
+	res.statusCode = 200;
+	const s3 = new AWS.S3({
+		credentials: {
+			accessKeyId: req.body.accessKeyId,
+			secretAccessKey: req.body.secretAccessKey,
+		},
+		region: 'ap-southeast-1',
+	});
+	const buckets = await s3.listBuckets().promise();
+
+	res.json({
+		body: {
+			accessKeyId: req.body.accessKeyId,
+			secretAccessKey: req.body.secretAccessKey,
+			buckets,
+		},
+	});
+});
 
 /********************************
  * HTTP Get method for list objects *

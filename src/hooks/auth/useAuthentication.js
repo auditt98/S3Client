@@ -60,10 +60,11 @@ export const useAuthentication = () => {
 				username: authenticatedUser.username,
 			};
 			let synchedUser = { ...transformedUser };
+			console.log('sync 63');
 			if (!currentUser.accessKeyId || !currentUser.secretAccessKey) {
 				let userDB = await API.get(
 					awsConfig.aws_cloud_logic_custom[0].name,
-					`/users/${transformedUser.username}/${transformedUser.email}`,
+					`/user/${transformedUser.username}/${transformedUser.email}`,
 					{
 						headers: {
 							'Content-Type': 'application/json',
@@ -71,14 +72,19 @@ export const useAuthentication = () => {
 						},
 					}
 				);
+				console.log('sync 75');
+
 				if (userDB && userDB.data && userDB.data.Item) {
 					let userData = userDB.data.Item;
 					synchedUser = { ...transformedUser, ...userData };
 					getRegions(synchedUser.accessKeyId, synchedUser.secretAccessKey);
 					setCurrentUser(synchedUser);
+					console.log('sync 82', synchedUser);
+
 					return;
 				}
 			}
+			console.log('sync 85');
 			setCurrentUser(transformedUser);
 		} catch (e) {
 			console.log(Object.entries(e));

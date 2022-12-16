@@ -24,7 +24,7 @@ function Settings() {
 		let { accessKeyId, secretAccessKey } = data;
 		try {
 			console.log('currentUser', currentUser);
-			let result = await API.post('s3cUserAPI', `/users/${currentUser.id}/${currentUser.email}`, {
+			let result = await API.post('s3cUserAPI', `/user/${currentUser.id}/${currentUser.email}`, {
 				body: {
 					accessKeyId,
 					secretAccessKey,

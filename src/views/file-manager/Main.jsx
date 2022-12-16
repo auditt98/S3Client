@@ -3,14 +3,20 @@ import { faker as $f } from '@/utils';
 import * as $_ from 'lodash';
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { useAuthentication } from '../../hooks/auth/useAuthentication';
 import { useS3 } from '../../hooks/storage/useS3';
+import { currentUserState } from '../../stores/user-store';
 
 function Main() {
 	const { getRegions, getBuckets } = useS3();
 	const location = useLocation();
+	const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+	const { syncCurrentUser } = useAuthentication();
 	useEffect(() => {
-		getBuckets();
-	}, location.pathname);
+		console.log('syncCurrentUser', currentUser);
+		getBuckets(currentUser.accessKeyId, currentUser.secretAccessKey);
+	}, [location.pathname, currentUser]);
 
 	return (
 		<>
